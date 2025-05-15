@@ -1,0 +1,75 @@
+/* Login/Signup Section */
+.auth-section {
+    padding: 40px 0;
+    background-color: #1DA1F2;
+    height: 87vh; /* Make the background cover the entire screen height */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centers the content vertically */
+}
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.auth-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+}
+
+.auth-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.btn-auth {
+    width: 97%;
+    padding: 10px;
+    background-color: #b3ff00;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.social-btn {
+    width: 97%;
+    padding: 10px;
+    background-color: #3b5998;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-top: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-link {
+    color: #1DA1F2;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.toggle-link:hover {
+    text-decoration: underline;
+}

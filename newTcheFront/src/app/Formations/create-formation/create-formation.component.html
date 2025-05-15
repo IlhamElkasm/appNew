@@ -1,0 +1,72 @@
+<div class="container mt-4">
+  <h2>Create New Formation</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <form (ngSubmit)="onSubmit()" #formationForm="ngForm">
+    <div class="form-group mb-3">
+      <label for="title">Title*</label>
+      <input type="text" class="form-control" id="title" name="title"
+             [(ngModel)]="formation.title" required>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" name="description"
+                [(ngModel)]="formation.description" rows="3"></textarea>
+                
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="startDate">Start Date*</label>
+          <input type="date" class="form-control" id="startDate" name="startDate"
+                 [(ngModel)]="formation.startDate" required>
+                 
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="endDate">End Date*</label>
+          <input type="date" class="form-control" id="endDate" name="endDate"
+                 [(ngModel)]="formation.endDate" required>
+                 {{ formation.startDate | date: 'yyyy-MM-dd' }} - {{ formation.endDate | date: 'yyyy-MM-dd' }}
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="price">Price*</label>
+          <input type="number" class="form-control" id="price" name="price"
+                 [(ngModel)]="formation.price" required min="0" step="0.01">
+        </div>
+      </div>
+  
+    </div>
+
+   
+
+    <div class="form-group mb-3">
+      <label for="image">Image</label>
+      <input type="file" class="form-control" id="image" name="image"
+             (change)="onFileSelected($event)" accept="image/*">
+      <small class="form-text text-muted">Max size: 5MB (JPEG, PNG)</small>
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary" [disabled]="!formationForm.form.valid || isUploading">
+        Create Formation
+        <span *ngIf="isUploading" class="spinner-border spinner-border-sm ms-1"></span>
+      </button>
+    </div>
+  </form>
+</div>

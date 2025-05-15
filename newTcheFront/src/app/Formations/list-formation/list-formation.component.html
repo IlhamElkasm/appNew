@@ -1,0 +1,41 @@
+<!-- components/formation-list/formation-list.component.html -->
+<div class="container mt-4" id="listformation">
+  <h2>Formations</h2>
+  <!-- <a [routerLink]="['/formation']" class="btn btn-primary btn-sm">addformation</a> -->
+
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && formations.length === 0" class="alert alert-info">
+    No formations found.
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let formation of formations">
+      <div class="card h-100">
+        <img *ngIf="formation.imageUrl" [src]="formation.imageUrl" class="card-img-top" alt="Formation image">
+        <div class="card-body">
+          <h5 class="card-title">{{ formation.title }}</h5>
+          <p class="card-text">{{ formation.description }}</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <strong>Date:</strong> {{ formation.startDate | date:'medium' }} - {{ formation.endDate | date:'medium' }}
+            </li>
+            <li class="list-group-item">
+              <strong>Price:</strong> {{ formation.price | currency }}
+            </li>
+           
+          </ul>
+        </div>
+        <div class="card-footer">
+          <a [routerLink]="['/formations', formation.id]" class="btn btn-primary btn-sm">View Details</a>
+          <a [routerLink]="['/edit-formation/:id', formation.id, 'edit']" class="btn btn-warning btn-sm ms-2">Edit</a>
+          <button (click)="deleteFormation(formation.id!)" class="btn btn-danger btn-sm ms-2">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

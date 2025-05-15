@@ -1,0 +1,47 @@
+<!-- Login/Signup Section -->
+<section class="auth-section">
+    <div class="container">
+        <div class="auth-container">
+            <!-- Login Card -->
+            <div *ngIf="showLogin" class="auth-card">
+                <h3 class="auth-title">Login</h3>
+                <form>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn-auth">Login</button>
+                    <button type="button" class="social-btn">
+                        <!-- Your SVG code -->
+                        Continue with Facebook
+                    </button>
+                </form>
+                <p class="toggle-link" (click)="toggleForm()">Don't have an account? Sign up</p>
+            </div>
+
+            <!-- Signup Card -->
+            <div *ngIf="!showLogin" class="auth-card">
+                <h3 class="auth-title">Signup</h3>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn-auth">Signup</button>
+                    <button type="button" class="social-btn">
+                        <!-- Your SVG code -->
+                        Continue with Facebook
+                    </button>
+                </form>
+                <p class="toggle-link" (click)="toggleForm()">Already have an account? Login</p>
+            </div>
+        </div>
+    </div>
+</section>

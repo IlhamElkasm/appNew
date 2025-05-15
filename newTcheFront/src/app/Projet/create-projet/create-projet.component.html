@@ -1,0 +1,22 @@
+<div class="container">
+  <h2>Créer un Nouveau Projet</h2>
+
+  <label>Nom du projet:</label>
+  <input type="text" [(ngModel)]="project.titre" class="form-control" />
+
+  <label>Description:</label>
+  <textarea [(ngModel)]="project.description" class="form-control"></textarea>
+
+  <label>Date Début:</label>
+  <input type="date" [(ngModel)]="project.dateDebut" class="form-control" />
+
+  <label>Date Fin:</label>
+  <input type="date" [(ngModel)]="project.dateFin" class="form-control" />
+
+  <label>Image:</label>
+  <input type="file" (change)="onFileSelected($event)" class="form-control" />
+
+  <button (click)="addProject()" class="btn btn-success" [disabled]="isUploading">
+    {{ isUploading ? 'Téléchargement...' : 'Créer' }}
+  </button>
+</div>

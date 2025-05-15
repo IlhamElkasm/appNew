@@ -1,0 +1,41 @@
+<!-- src/app/reservations/my-reservations/my-reservations.component.html -->
+<div class="reservations-container">
+    <h2>My Reservations</h2>
+    
+    <div *ngIf="loading" class="loading-spinner">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    
+    <div *ngIf="!loading && reservations.length === 0" class="no-reservations">
+      <p>You don't have any reservations yet.</p>
+      <a routerLink="/formations" class="btn-blue">Browse Formations</a>
+    </div>
+    
+    <div *ngIf="!loading && reservations.length > 0" class="reservations-list">
+      <div class="reservation-card" *ngFor="let reservation of reservations">
+        <div class="reservation-header">
+            <h3>{{ reservation.formation.title }}</h3>
+            <span class="reservation-status" [ngClass]="getStatusClass(reservation.status)">
+            {{ reservation.status }}
+          </span>
+        </div>
+        
+        <div class="reservation-details">
+          <p><strong>Reserved on:</strong> {{ reservation.reservedAt | date:'medium' }}</p>
+          <p><strong>Date:</strong> {{ reservation.formation.startDate | date:'mediumDate' }} - {{ reservation.formation.endDate | date:'mediumDate' }}</p>
+          <p><strong>Price:</strong> {{ reservation.formation.price }} USD</p>
+        </div>
+        
+        <div class="reservation-actions">
+          <button *ngIf="reservation.status === 'PENDING'" class="btn-cancel" (click)="cancelReservation(reservation.id)">
+            Cancel Reservation
+          </button>
+          <a *ngIf="reservation.status === 'CONFIRMED' && !reservation.payment" class="btn-pay">
+            Proceed to Payment
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>

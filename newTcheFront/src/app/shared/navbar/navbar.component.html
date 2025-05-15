@@ -1,0 +1,87 @@
+<header class="main-header">
+  <div class="container header-content">
+    <!-- Logo -->
+    <div class="logo">
+      <img src="assets/img/LogoNewTche.png" alt="NewTech Logo">
+      <div class="logo-text">
+        <h1>NEWTECH & MULTIMEDIA</h1>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
+      <span class="menu-icon"></span>
+    </button>
+
+    <!-- Navigation Menu -->
+    <nav [class.active]="mobileMenuOpen">
+      <ul class="nav-menu">
+
+        <!-- Home -->
+        <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+
+        <!-- Formations -->
+        <!-- <li class="dropdown" *ngIf="authService.isAdmin() || authService.isSecretaire()">
+          <a (click)="toggleDropdown('formations')" class="dropdown-toggle">
+            Formations <i class="fa fa-angle-down"></i>
+          </a>
+          <ul class="dropdown-menu" [class.show]="activeDropdown === 'formations'">
+            <li><a routerLink="/listformation" routerLinkActive="active">List Formations</a></li>
+            <li>
+              <a routerLink="/formation" routerLinkActive="active">Create Formation</a>
+            </li>
+          </ul>
+        </li> -->
+
+        <li class="dropdown">
+          <a href="/home#formations">Formations</a>
+        </li>
+        
+         <!-- Projects -->
+         <li class="dropdown"  *ngIf="authService.isClient()">
+            <a href="/home#projects">Projects</a>
+         </li>
+       
+        <!-- Projects -->
+        <!-- <li class="dropdown"  *ngIf="authService.isAdmin() || authService.isSecretaire()">
+          <a (click)="toggleDropdown('projects')" class="dropdown-toggle">
+            Projects <i class="fa fa-angle-down"></i>
+          </a>
+          <ul class="dropdown-menu" [class.show]="activeDropdown === 'projects'">
+            <li><a routerLink="/Listprojets" routerLinkActive="active">List Projects</a></li>
+            <li>
+              <a routerLink="/projet" routerLinkActive="active">Create Project</a>
+            </li>
+          </ul>
+        </li> -->
+
+        <!-- Location -->
+        <li  class="dropdown"  *ngIf="authService.isClient()">
+          <a href="/home#location">Location</a>
+        </li>
+
+        <!-- Paiement -->
+        <!-- <li><a routerLink="/paiement" routerLinkActive="active">Payment</a></li> -->
+
+        <!-- Auth Links -->
+        <ng-container *ngIf="!authService.isLoggedIn">
+          <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+          <li><a routerLink="/register-client" routerLinkActive="active">Register</a></li>
+        </ng-container>
+
+        <!-- User Menu -->
+        <li *ngIf="authService.isLoggedIn" class="dropdown user-dropdown">
+          <a (click)="toggleDropdown('user')" class="dropdown-toggle">
+            <i class="fa fa-user"></i> {{ authService.currentUserValue?.nom || 'User' }}
+          </a>
+          <ul class="dropdown-menu" [class.show]="activeDropdown === 'user'">
+            <li *ngIf="authService.isAdmin()">
+              <a routerLink="/register-secretaire" routerLinkActive="active">Register Secretary</a>
+            </li>
+            <li><a (click)="logout()">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

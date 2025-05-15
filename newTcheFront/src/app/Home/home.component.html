@@ -1,0 +1,208 @@
+<app-navbar></app-navbar>
+
+
+  
+<!-- About Us Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="about-us">
+            <div class="about-image">
+                <img src="assets/img/NewTech.png" alt="Project visualization">
+            </div>
+            <div class="about-content">
+                <h2>About Us</h2>
+                <p>Le bureau a reconnu l'impact des crises financières internationales sur l'économie mondiale, 
+                    appelant à l'adoption de solutions novatrices pour y faire face.
+                    Pour maintenir ses acquis et répondre aux attentes de ses clients,
+                    elle a mis en place des principes axés sur la qualité, la créativité, la réduction des coûts et la compétitivité.
+                    Une attention particulière est accordée au développement des compétences humaines, 
+                    à l'utilisation de technologies de pointe et à l'application de systèmes de gestion modernes.</p>
+                
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-number">{{ formationCount }}</div>
+                        <div class="stat-label">Formations</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">{{ newClientCount }}</div>
+                        <div class="stat-label">Clients</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Formations Section -->
+<section class="formations-section" id="formations">
+    <div class="container">
+        <h2 class="section-title">Formations</h2>
+        <div class="card-grid">
+            <div class="card" *ngFor="let formation of formations">
+                <div class="card-img">
+                    <img [src]="formation.imageUrl" [alt]="formation.title">
+                </div>
+                <div class="card-content">
+                  <h3 class="card-title">{{ formation.title }}</h3>
+                  <div class="formation-details">
+                    <p><strong>Date:</strong> {{ formation.startDate | date:'mediumDate' }} - {{ formation.endDate | date:'mediumDate' }}</p>
+                    
+                  </div>
+                  <button 
+                  class="btn-reserve" 
+                  *ngIf="formation.id !== undefined" 
+                  (click)="viewDetails(formation.id!)">
+                  View Details
+                  <svg *ngIf="!loading" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                  </svg>
+                </button>
+                
+                  
+                </div>
+              </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<!-- Projects Section -->
+<section class="projects-section" id="projects" *ngIf="authService.isClient()">
+    <h2 class="section-title">Projets</h2>
+    <div class="card-grid">
+        <div class="card" *ngFor="let projet of projets">
+            <div class="card-img">
+                <img [src]="projet.imageUrl" [alt]="projet.titre">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">{{ projet.titre }}</h3>
+                <p class="card-text">{{ projet.description }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Location Section -->
+<!-- <section class="location-section">
+    <div class="container">
+        <div class="location-container">
+            <div class="location-img">
+                <img src="location.jpg" alt="3D Layout">
+            </div>
+            <div class="location-content">
+                <h2 class="location-title">Location</h2>
+                <p>The campus facility is centrally located, contact form with App & PDF or a few minutes, and map and photo guide line tips, add a little color and you're ready.</p>
+                <div class="map">
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<app-location></app-location>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <!-- Colonne gauche -->
+    <div class="footer-col">
+      <img class="footer-title" src="assets/img/LogoNewTche.png" alt="NewTech Logo">
+      <p class="footer-subtitle"> NewTech</p>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <!-- Colonne centre -->
+    <div class="footer-col">
+      <h3 class="footer-title">À propos</h3>
+      <ul>
+        <li>Notre mission</li>
+        <li>Nos services</li>
+        <li>Contact</li>
+        <li>Partenaires</li>
+      </ul>
+    </div>
+
+    <!-- Colonne coordonnées -->
+    <div class="footer-col">
+      <h3 class="footer-title">Coordonnées</h3>
+      <p><strong>Adresse :</strong> Résidence Atlantic, IMM H, App.3 CYM - Rabat</p>
+      <p><i class="fas fa-envelope"></i> info@newtech.ma</p>
+      <p><i class="fas fa-phone"></i> +212 537690030</p>
+      <p><i class="fas fa-fax"></i> +212 537690033</p>
+    </div>
+
+    <!-- Colonne carte -->
+    <div class="footer-col">
+      <h3 class="footer-title">Emplacement</h3>
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3307.459842243401!2d-6.837699023481826!3d33.96788694044248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda76c6a1e8ada53%3A0x78bc1af9c11f6df2!2sR%C3%A9sidence%20Atlantic%2C%20CYM%2C%20Rabat!5e0!3m2!1sen!2sma!4v1714999051234!5m2!1sen!2sma" 
+        width="100%" 
+        height="180" 
+        style="border:0;" 
+        allowfullscreen 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 Tous les droits réservés | NewTech
+  </div>
+</footer>
+
+
+
+<!-- <footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Address</h3>
+                <ul>
+                    <li>123 Street, City, Country</li>
+                    <li>info.com</li>
+                    <li>+123 456 7890</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#">Web Development</a></li>
+                    <li><a href="#">App Development</a></li>
+                    <li><a href="#">UI/UX Design</a></li>
+                    <li><a href="#">Consultation</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Condition</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Newsletter</h3>
+                <form>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Your Email">
+                    </div>
+                    <button type="submit" class="btn-blue">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 
+                <script>document.write(new Date().getFullYear());</script> 
+                NewTech & Multimedia SARL. All Rights Reserved.
+            </p>
+        </div>
+    </div>
+</footer> -->

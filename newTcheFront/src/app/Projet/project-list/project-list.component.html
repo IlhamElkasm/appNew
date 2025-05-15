@@ -1,0 +1,20 @@
+<div class="container">
+  <!-- <button class="btn btn-primary" [routerLink]="['/projet']">Add</button> -->
+  <h2>Liste des Projets</h2>
+
+  <!-- 🔹 Liste des projets -->
+  <div class="project-list">
+    <div *ngFor="let project of projects" class="project-card">
+      <img [src]="project.imageUrl" alt="Image du projet" class="project-img" />
+      <h3>{{ project.name }}</h3>
+      <p>{{ project.description }}</p>
+      <p><strong>Date Début:</strong> {{ project.dateDebut }}</p>
+      <p><strong>Date Fin:</strong> {{ project.dateFin }}</p>
+
+      <button (click)="editProject(project.id)" class="btn btn-primary">Modifier</button>
+      <button (click)="deleteProject(project.id)" class="btn btn-danger">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+  

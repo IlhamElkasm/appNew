@@ -1,0 +1,28 @@
+<div class="popup-view active">
+  <div class="popup-card">
+    <a><i class="fas fa-times close-btn" (click)="goBack()"></i></a>
+
+    <div class="product-img">
+      <img [src]="formation.imageUrl" alt="formation image">
+    </div>
+
+    <div class="info">
+      <h2>{{ formation.title }}<br>
+        <span>{{ formation.startDate | date:'mediumDate' }} - {{ formation.endDate | date:'mediumDate' }}</span>
+      </h2>
+      <p>{{ formation.description }}</p>
+      <span class="price">{{ formation.price | currency:'DH' }}</span>
+
+      <!-- Show reserve button only for logged-in clients -->
+      <div *ngIf="authService.isLoggedIn">
+        <a *ngIf="authService.isClient()" class="add-cart-btn" (click)="reserve(formation)">Réserver</a>
+      </div>
+
+      <!-- Show message for non-logged-in users -->
+      <div *ngIf="!authService.isLoggedIn">
+        <p>Please log in or create an account to reserve this formation.</p>
+        <button class="btn btn-primary" (click)="router.navigate(['/login'])">Login / Sign Up</button>
+      </div>
+    </div>
+  </div>
+</div>
