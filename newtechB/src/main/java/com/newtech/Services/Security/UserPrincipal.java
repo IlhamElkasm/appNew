@@ -28,11 +28,11 @@ public class UserPrincipal implements UserDetails, Serializable {
 
     private Collection<? extends GrantedAuthority> authorities;
     private boolean active;
-
+    // Dans UserPrincipal.java - Ne pas ajouter "ROLE_"
     public static UserPrincipal create(User user) {
         List<GrantedAuthority> authorities = (user.getRoles() != null) ?
                 user.getRoles().stream()
-                        .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                        .map(role -> new SimpleGrantedAuthority(role.toString()))
                         .collect(Collectors.toList())
                 : List.of();
 
@@ -45,6 +45,24 @@ public class UserPrincipal implements UserDetails, Serializable {
                 user.isActive()
         );
     }
+
+
+//    public static UserPrincipal create(User user) {
+//        List<GrantedAuthority> authorities = (user.getRoles() != null) ?
+//                user.getRoles().stream()
+//                        .map(role -> new SimpleGrantedAuthority("" + role))
+//                        .collect(Collectors.toList())
+//                : List.of();
+//
+//        return new UserPrincipal(
+//                user.getId(),
+//                user.getNom(),
+//                user.getEmail(),
+//                user.getMotDePasse(),
+//                authorities,
+//                user.isActive()
+//        );
+//    }
 
     @Override
     public String getUsername() {

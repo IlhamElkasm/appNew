@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,6 +49,13 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
+    // Dans SecurityConfig.java - Ajouter cette configuration
+    @Bean
+    public GrantedAuthorityDefaults grantedAuthorityDefaults() {
+        // Supprimer le préfixe "ROLE_" par défaut
+        return new GrantedAuthorityDefaults("");
+    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -73,16 +81,24 @@ public class SecurityConfig {
 //                                .requestMatchers(mvc.pattern("/api/admin/init")).permitAll()
 //                                .requestMatchers(mvc.pattern("/h2-console/**")).permitAll()
                                 .requestMatchers(mvc.pattern("/api/projects/admin/**")).hasRole("ADMIN")
+                                .requestMatchers(mvc.pattern("/api/reservations/client/admin/count/new")).hasRole("ADMIN")
+                                .requestMatchers(mvc.pattern("/api/notifications/**")).hasAnyAuthority("ADMIN", "SECRETAIRE")
 //                                .requestMatchers(HttpMethod.POST, "/api/projects/admin/create").hasRole("ADMIN")
 //                                .requestMatchers(HttpMethod.PUT, "/api/projects/admin/{id}").hasRole("ADMIN")
 //                                .requestMatchers(HttpMethod.DELETE, "/api/projects/admin/{id}").hasRole("ADMIN")
 //                                .requestMatchers(HttpMethod.GET, "/api/projects/all").hasAnyAuthority("ADMIN", "CLIENT")
+                                .requestMatchers(mvc.pattern("/api/formations/all")).permitAll()
+                                .requestMatchers(mvc.pattern("/api/formations/count")).permitAll()
+
+
+
                                 .requestMatchers(mvc.pattern("/api/formations/admin/**")).hasRole("ADMIN")
                                 .requestMatchers(mvc.pattern("/api/reservations/client/**")).hasRole("CLIENT")
                                 .requestMatchers(mvc.pattern("/api/client/**")).hasRole("CLIENT")
                                 .requestMatchers(mvc.pattern("/api/secretaire/**")).hasRole("SECRETAIRE")
                                 .anyRequest().authenticated()
                 );
+
 
 
         // Add JWT filter before UsernamePasswordAuthenticationFilter

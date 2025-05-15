@@ -5,28 +5,39 @@ import com.newtech.DTO.UserDTO;
 import com.newtech.Enum.UserRole;
 import com.newtech.Exception.EmailAlreadyExistsException;
 import com.newtech.Model.Client;
+import com.newtech.Repositories.ClientRepository;
 import com.newtech.Repositories.UserRepository;
+import com.newtech.Services.Security.Service.EmailClientService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class ClientRegistrationService {
 
     private final UserRepository userRepository;
+    @Autowired
+    private ClientRepository clientRepository;
     private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private  EmailClientService emailService;
     private Set<UserRole> roles = new HashSet<>();
 
-
-    public ClientRegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public ClientRegistrationService(UserRepository userRepository,
+                                     PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+       ;
     }
 
     @Transactional
@@ -46,7 +57,6 @@ public class ClientRegistrationService {
         client.setRole(UserRole.valueOf(UserRole.CLIENT.name()));
         client.setRoles(Collections.singleton(UserRole.CLIENT));
 
-
         // Set client-specific fields
         client.setTelephone(request.getTelephone());
         client.setAdresse(request.getAdresse());
@@ -54,7 +64,16 @@ public class ClientRegistrationService {
         Client savedClient = userRepository.save(client);
         log.info("Client created successfully with ID: {}", savedClient.getId());
 
+        // Send confirmation email
+        emailService.sendRegistrationConfirmationEmail(savedClient.getEmail(), savedClient.getNom());
+
         return mapToDTO(savedClient);
+    }
+
+
+    public List<UserDTO> getAllClients() {
+        List<Client> clients = clientRepository.findAllByRole(UserRole.CLIENT);
+        return clients.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
     private UserDTO mapToDTO(Client client) {
@@ -62,11 +81,19 @@ public class ClientRegistrationService {
         dto.setId(client.getId());
         dto.setNom(client.getNom());
         dto.setEmail(client.getEmail());
-        dto.setRole(client.getRole());
         dto.setRoles(client.getRoles());
+        dto.setRole(UserRole.CLIENT);
         dto.setActive(client.isActive());
+        dto.setTelephone(client.getTelephone()); // 👈 Assurez-vous que ces getters existent
+        dto.setAdresse(client.getAdresse());
         return dto;
     }
+
+    public long countNewClients() {
+        LocalDateTime lastMonth = LocalDateTime.now().minusMonths(1);
+        return clientRepository.countByCreatedAtAfter(lastMonth);
+    }
+
 }
 
 

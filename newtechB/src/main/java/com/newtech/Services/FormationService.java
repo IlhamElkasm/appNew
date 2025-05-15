@@ -54,4 +54,12 @@ public class FormationService {
         }
         return false;
     }
+
+    public long countFormations() {
+        return formationRepository.count();
+    }
+
+
+
+
 }

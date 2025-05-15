@@ -14,9 +14,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -70,6 +72,7 @@ public class RegistrationController {
         }
     }
 
+    // Dans RegistrationController.java - Éliminer le remplacement
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         log.info("Processing login request for user: {}", loginRequest.getEmail());
@@ -84,12 +87,53 @@ public class RegistrationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.generateToken(authentication);
 
-        // Extract roles from the authentication object
+        // Simplement collecter les autorités sans modification
         Set<String> roles = authentication.getAuthorities().stream()
-                .map(grantedAuthority -> grantedAuthority.getAuthority())
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toSet());
 
         log.info("User logged in successfully: {}", loginRequest.getEmail());
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, roles));  // Return the token and roles
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, roles));
     }
+
+
+//    @PostMapping("/login")
+//    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+//        log.info("Processing login request for user: {}", loginRequest.getEmail());
+//
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(
+//                        loginRequest.getEmail(),
+//                        loginRequest.getPassword()
+//                )
+//        );
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        String jwt = tokenProvider.generateToken(authentication);
+//
+//        // Extract roles from the authentication object
+//        Set<String> roles = authentication.getAuthorities().stream()
+//                .map(grantedAuthority -> grantedAuthority.getAuthority())
+//                .collect(Collectors.toSet());
+//
+//        log.info("User logged in successfully: {}", loginRequest.getEmail());
+//        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, roles));  // Return the token and roles
+//    }
+
+
+    @GetMapping("/clients")
+    @PreAuthorize("hasRole('ADMIN')") // Optionnel
+    public ResponseEntity<List<UserDTO>> getAllClients() {
+        List<UserDTO> clients = clientRegistrationService.getAllClients();
+        return ResponseEntity.ok(clients);
+    }
+
+
+    @GetMapping("/clients/new/count")
+    public ResponseEntity<Long> countNewClients() {
+        long newClientsCount = clientRegistrationService.countNewClients();
+        return ResponseEntity.ok(newClientsCount);
+    }
+
+
 }

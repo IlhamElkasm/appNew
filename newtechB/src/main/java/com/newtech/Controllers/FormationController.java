@@ -36,7 +36,7 @@ public class FormationController {
         return formation != null ? ResponseEntity.ok(formation) : ResponseEntity.notFound().build();
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<FormationDto>> getAllFormations() {
         List<FormationDto> formations = formationService.getAllFormations();
         return ResponseEntity.ok(formations);
@@ -46,4 +46,12 @@ public class FormationController {
     public ResponseEntity<Void> deleteFormation(@PathVariable Long id) {
         return formationService.deleteFormation(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
+
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> countFormations() {
+        long count = formationService.countFormations();
+        return ResponseEntity.ok(count);
+    }
+
 }

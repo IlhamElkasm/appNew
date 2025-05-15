@@ -79,16 +79,12 @@ public class ReservationController {
         }
     }
 
-    @PutMapping("/{id}/status")
-    public ResponseEntity<ReservationDTO> updateReservationStatus(
-            @PathVariable Long id,
-            @RequestBody Map<String, String> payload) {
-        try {
-            ReservationStatus status = ReservationStatus.valueOf(payload.get("status"));
-            ReservationDTO updatedReservation = reservationService.updateReservationStatus(id, status);
-            return new ResponseEntity<>(updatedReservation, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
+    @GetMapping("/admin/count/new")
+    public ResponseEntity<Long> countNewReservations() {
+        long count = reservationService.countNewReservations();
+        return new ResponseEntity<>(count, HttpStatus.OK);
     }
+
+
 }

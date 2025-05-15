@@ -19,4 +19,6 @@ public class UserDTO {
     private UserRole role;
     private Set<UserRole> roles;
     private boolean active;
+    private String telephone;
+    private String adresse;
 }

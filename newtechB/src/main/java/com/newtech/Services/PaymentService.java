@@ -23,8 +23,6 @@ public class PaymentService {
     @Autowired
     private ReservationRepository reservationRepository;
 
-    @Autowired
-    private NotificationService notificationService;
 
     public List<Payment> getAllPayments() {
         return paymentRepository.findAll();

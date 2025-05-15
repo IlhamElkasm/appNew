@@ -22,6 +22,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+
+    // Dans UserDetailsServiceImpl.java - Ne pas ajouter "ROLE_"
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -29,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
         Set<SimpleGrantedAuthority> authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                .map(role -> new SimpleGrantedAuthority(role.toString()))
                 .collect(Collectors.toSet());
 
         return new org.springframework.security.core.userdetails.User(
@@ -42,4 +44,24 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 authorities
         );
     }
+//    @Override
+//    @Transactional(readOnly = true)
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        User user = userRepository.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+//
+//        Set<SimpleGrantedAuthority> authorities = user.getRoles().stream()
+//                .map(role -> new SimpleGrantedAuthority("" + role))
+//                .collect(Collectors.toSet());
+//
+//        return new org.springframework.security.core.userdetails.User(
+//                user.getEmail(),
+//                user.getMotDePasse(),
+//                user.isActive(),
+//                true,
+//                true,
+//                true,
+//                authorities
+//        );
+//    }
 }

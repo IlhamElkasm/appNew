@@ -31,34 +31,27 @@ public class ReservationService {
 
     @Autowired
     private FormationRepository formationRepository;
-
     @Autowired
-    private NotificationService notificationService;
-
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    private ReservationMapper reservationMapper; // إضافة ال Mapper
+    private ReservationMapper reservationMapper;
 
     public List<ReservationDTO> getAllReservations() {
         List<Reservation> reservations = reservationRepository.findAll();
-        return reservationMapper.toDtoList(reservations); // تحويل الكائنات إلى DTO
+        return reservationMapper.toDtoList(reservations);
     }
 
     public Optional<ReservationDTO> getReservationById(Long id) {
         Optional<Reservation> reservation = reservationRepository.findById(id);
-        return reservation.map(reservationMapper::toDto); // تحويل الكائن إلى DTO
+        return reservation.map(reservationMapper::toDto);
     }
 
     public List<ReservationDTO> getReservationsByClientId(Long clientId) {
         List<Reservation> reservations = reservationRepository.findByClientId(clientId);
-        return reservationMapper.toDtoList(reservations); // تحويل الكائنات إلى DTO
+        return reservationMapper.toDtoList(reservations);
     }
 
     public List<ReservationDTO> getReservationsByFormationId(Long formationId) {
         List<Reservation> reservations = reservationRepository.findByFormationId(formationId);
-        return reservationMapper.toDtoList(reservations); // تحويل الكائنات إلى DTO
+        return reservationMapper.toDtoList(reservations);
     }
 
     @Transactional
@@ -71,10 +64,6 @@ public class ReservationService {
 
         // Check if there are available slots
         List<Reservation> existingReservations = reservationRepository.findByFormationId(formationId);
-        if (formation.getMaxParticipants() != null &&
-                existingReservations.size() >= formation.getMaxParticipants()) {
-            throw new Exception("No available slots for this formation");
-        }
 
         Reservation reservation = new Reservation();
         reservation.setClient(client);
@@ -84,37 +73,13 @@ public class ReservationService {
 
         Reservation savedReservation = reservationRepository.save(reservation);
 
-        // Notify secretaries about new reservation
-        notificationService.notifySecretariesAboutNewReservation(savedReservation);
-
-        return reservationMapper.toDto(savedReservation); // تحويل الكائن إلى DTO
+        return reservationMapper.toDto(savedReservation);
     }
 
-    @Transactional
-    public ReservationDTO updateReservationStatus(Long id, ReservationStatus status) throws Exception {
-        Reservation reservation = reservationRepository.findById(id)
-                .orElseThrow(() -> new Exception("Reservation not found with id: " + id));
 
-        reservation.setStatus(status);
 
-        if (status == ReservationStatus.CONFIRMED) {
-            // Send confirmation email to client
-            emailService.sendFormationConfirmationEmail(
-                    reservation.getClient().getEmail(),
-                    reservation.getClient().getNom(),
-                    reservation.getFormation()
-            );
-
-            // Notify client about confirmation
-            notificationService.createNotification(
-                    reservation.getClient(),
-                    "Your reservation for " + reservation.getFormation().getTitle() + " has been confirmed",
-                    NotificationType.RESERVATION,
-                    reservation.getId()
-            );
-        }
-
-        reservationRepository.save(reservation);
-        return reservationMapper.toDto(reservation); // تحويل الكائن إلى DTO
+    public long countNewReservations() {
+        return reservationRepository.countByStatus(ReservationStatus.PENDING);
     }
+
 }
