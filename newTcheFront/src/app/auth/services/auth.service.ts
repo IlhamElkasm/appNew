@@ -15,7 +15,7 @@ export class AuthService {
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
- 
+
   constructor(private http: HttpClient) {
     this.loadUserFromLocalStorage();
   }
@@ -27,45 +27,82 @@ export class AuthService {
       this.currentUserSubject.next(JSON.parse(userJson));
     }
   }
-  
+
   // Version modifiée pour accepter un objet formulaire ou des paramètres séparés
+  // login(emailOrFormValue: string | { email: string, password: string }, password?: string): Observable<AuthResponse> {
+  //   let email: string;
+  //   let pwd: string;
+
+  //   // Vérifier si le premier paramètre est un objet ou une chaîne
+  //   if (typeof emailOrFormValue === 'object') {
+  //     email = emailOrFormValue.email;
+  //     pwd = emailOrFormValue.password;
+  //   } else {
+  //     email = emailOrFormValue;
+  //     pwd = password!; // L'opérateur ! indique à TypeScript que password n'est pas undefined
+  //   }
+
+  //   return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { email, password: pwd }).pipe(
+
+  //     tap(response => {
+  //       localStorage.setItem('token', response.accessToken);
+
+  //       const user: User = {
+  //         email: email,
+  //         nom: response.nom || '', // ✅ utilise le nom retourné
+  //         roles: response.roles.map(role => role as UserRole)
+  //       };
+
+  //       localStorage.setItem('user', JSON.stringify(user));
+  //       this.currentUserSubject.next(user);
+  //     })
+
+  //   );
+  // }
+
   login(emailOrFormValue: string | { email: string, password: string }, password?: string): Observable<AuthResponse> {
-    let email: string;
-    let pwd: string;
-    
-    // Vérifier si le premier paramètre est un objet ou une chaîne
-    if (typeof emailOrFormValue === 'object') {
-      email = emailOrFormValue.email;
-      pwd = emailOrFormValue.password;
-    } else {
-      email = emailOrFormValue;
-      pwd = password!; // L'opérateur ! indique à TypeScript que password n'est pas undefined
-    }
-    
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { email, password: pwd }).pipe(
-      tap(response => {
-        localStorage.setItem('token', response.accessToken);
- 
-        const user: User = {
-          email: email,
-          nom: '',  // À compléter si disponible dans la réponse
-          roles: response.roles.map(role => role as UserRole)
-        };
- 
-        localStorage.setItem('user', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-      })
-    );
+  let email: string;
+  let pwd: string;
+
+  // Vérifier si le premier paramètre est un objet ou une chaîne
+  if (typeof emailOrFormValue === 'object') {
+    email = emailOrFormValue.email;
+    pwd = emailOrFormValue.password;
+  } else {
+    email = emailOrFormValue;
+    pwd = password!;
   }
- 
+
+  return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { email, password: pwd }).pipe(
+    tap(response => {
+      console.log('Login response:', response); // Logging complet
+      console.log('Nom from response:', response.nom); // Log spécifique pour le nom
+
+      localStorage.setItem('token', response.accessToken);
+
+      // Création de l'objet utilisateur à partir de la réponse
+      const user: User = {
+        email: email,
+        nom: response.nom || '', // Utilisez le nom de la réponse et jamais null
+        roles: response.roles.map(role => role as UserRole)
+      };
+
+      console.log('User object being stored:', user);
+
+      localStorage.setItem('user', JSON.stringify(user));
+      this.currentUserSubject.next(user);
+    })
+  );
+}
+
   registerClient(client: ClientRegistration): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/register/client`, client);
   }
-  
+
   registerSecretaire(secretaire: SecretaireRegistration): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/register/secretaire`, secretaire);
   }
-  
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -73,40 +110,40 @@ export class AuthService {
   }
 
   // src/app/auth/services/auth.service.ts
-    getAllClients() {
-      return this.http.get<ClientRegistration[]>(`${this.apiUrl}/clients`); // ou l'URL complète si nécessaire
-    }
+  getAllClients() {
+    return this.http.get<ClientRegistration[]>(`${this.apiUrl}/clients`); // ou l'URL complète si nécessaire
+  }
 
 
-    getNewClientCount(): Observable<number> {
-      return this.http.get<number>('http://localhost:8081/api/auth/clients/new/count');
-    }
-    
-  
+  getNewClientCount(): Observable<number> {
+    return this.http.get<number>('http://localhost:8081/api/auth/clients/new/count');
+  }
+
+
   get currentUserValue(): User | null {
     return this.currentUserSubject.value;
   }
-  
+
   get isLoggedIn(): boolean {
     return !!this.currentUserValue;
   }
-  
+
   // Méthodes hasRole et isAdmin dans auth.service.ts
-hasRole(role: UserRole): boolean {
-  const user = this.currentUserValue;
-  if (!user || !user.roles) return false;
-  return user.roles.includes(role);
-}
+  hasRole(role: UserRole): boolean {
+    const user = this.currentUserValue;
+    if (!user || !user.roles) return false;
+    return user.roles.includes(role);
+  }
 
-isAdmin(): boolean {
-  return this.hasRole(UserRole.ADMIN);
-}
+  isAdmin(): boolean {
+    return this.hasRole(UserRole.ADMIN);
+  }
 
-isSecretaire(): boolean {
-  return this.hasRole(UserRole.SECRETAIRE);
-}
+  isSecretaire(): boolean {
+    return this.hasRole(UserRole.SECRETAIRE);
+  }
 
-isClient(): boolean {
-  return this.hasRole(UserRole.CLIENT);
-}
+  isClient(): boolean {
+    return this.hasRole(UserRole.CLIENT);
+  }
 }

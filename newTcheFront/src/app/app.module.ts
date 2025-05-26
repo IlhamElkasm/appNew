@@ -22,12 +22,12 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { FormationCardComponent } from './Formations/formation-card/formation-card.component';
-import { MyReservationsComponent } from './Reservation/my-reservations/my-reservations.component';
 import { FormationDetailsComponent } from './Formations/formation-details/formation-details.component';
 import { DashboardAdminComponent } from './Dashboard/dashboard-admin/dashboard-admin.component';
 import { LocationComponent } from './Home/location/location.component';
 import { FormationDetail2Component } from './Formations/formation-detail2/formation-detail2.component';
 import { PaymentSuccessComponent } from './paiement/payment-success/payment-success.component';
+import { ReservationListComponent } from './Reservation/reservation-list/reservation-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,12 +44,12 @@ import { PaymentSuccessComponent } from './paiement/payment-success/payment-succ
     RegisterSecretaireComponent,
     NavbarComponent,
     FormationCardComponent,
-    MyReservationsComponent,
     FormationDetailsComponent,
     DashboardAdminComponent,
     LocationComponent,
     FormationDetail2Component,
     PaymentSuccessComponent,
+    ReservationListComponent,
   ],
   imports: [
     BrowserModule,

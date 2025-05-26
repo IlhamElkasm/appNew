@@ -13,12 +13,12 @@ import { RegisterSecretaireComponent } from './auth/components/register-secretai
 import { UserRole } from './auth/models/user.model';
 import { AuthGuard } from './core/guards/auth.guard';
 import { LoginComponent } from './auth/components/login/login.component';
-import { MyReservationsComponent } from './Reservation/my-reservations/my-reservations.component';
 import { FormationDetailsComponent } from './Formations/formation-details/formation-details.component';
 import { DashboardAdminComponent } from './Dashboard/dashboard-admin/dashboard-admin.component';
 import { RedirectResolver } from './core/guards/redirect-resolver.guard';
 import { LocationComponent } from './Home/location/location.component';
 import { PaymentSuccessComponent } from './paiement/payment-success/payment-success.component';
+import { ReservationListComponent } from './Reservation/reservation-list/reservation-list.component';
 
 const routes: Routes = [
   // Route par défaut qui utilise un resolver pour rediriger en fonction du rôle
@@ -47,9 +47,9 @@ const routes: Routes = [
   },
   {
     path: 'ListReservation',
-    component: MyReservationsComponent,
+    component: ReservationListComponent,
     canActivate: [AuthGuard],
-    data: { roles: [UserRole.CLIENT] }
+    data: { roles: [UserRole.ADMIN] }
   },
   {
     path: 'formation-details/:id',

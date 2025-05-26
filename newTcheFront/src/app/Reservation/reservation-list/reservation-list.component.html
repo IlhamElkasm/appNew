@@ -1,0 +1,61 @@
+<!-- reservation-list.component.html -->
+<div class="container">
+  <h2>Liste des réservations</h2>
+  
+  <!-- Loading indicator -->
+  <div *ngIf="loading" class="text-center">
+    <p>Chargement des réservations...</p>
+  </div>
+  
+  <!-- Error message -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+  
+  <!-- Reservations table -->
+  <div *ngIf="!loading && !error">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Client</th>
+          <th>Formation</th>
+          <th>Status</th>
+          <th>Date de réservation</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reservation of reservations; let i = index">
+          <td>{{ reservation.id || i + 1 }}</td>
+          <td>{{ getClientName(reservation) }}</td>
+          <td>{{ getFormationTitle(reservation) }}</td>
+          <td>
+            <span [class]="'badge ' + (reservation.status === 'PENDING' ? 'bg-warning' : 
+                                     reservation.status === 'VALIDATED' ? 'bg-success' : 'bg-danger')">
+              {{ getStatusLabel(reservation.status) }}
+            </span>
+          </td>
+          <td>{{ reservation.reservedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td>
+            <button
+              *ngIf="reservation.status === 'PENDING'"
+              (click)="validate(reservation.id)"
+              class="btn btn-success btn-sm">
+              Valider
+            </button>
+            <span *ngIf="reservation.status !== 'PENDING'" class="text-muted">
+              Aucune action
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <!-- Empty state -->
+    <div *ngIf="reservations.length === 0" class="text-center mt-4">
+      <p class="text-muted">Aucune réservation trouvée.</p>
+    </div>
+  </div>
+
+</div>

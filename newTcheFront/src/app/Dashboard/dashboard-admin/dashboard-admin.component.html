@@ -79,6 +79,13 @@
           <span class="nav-text">Location</span>
         </a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/ListReservation">
+          <i class="fas fa-map-marker-alt"></i>
+          <span class="nav-text">ReservationList</span>
+        </a>
+      </li>
     </ul>
   </div>
 
@@ -122,7 +129,7 @@
           </li>
 
           <!-- Notifications -->
-          <li class="nav-item topbar-icon dropdown">
+          <!-- <li class="nav-item topbar-icon dropdown">
             <a class="nav-link dropdown-toggle" (click)="toggleDropdown('notificationDropdown')"
               href="javascript:void(0)">
               <i class="fa fa-bell"></i>
@@ -149,7 +156,54 @@
               </li>
               <li><a class="see-all" href="#">See all notifications<i class="fa fa-angle-right"></i></a></li>
             </ul>
-          </li>
+          </li> -->
+
+
+
+          <!-- Notifications -->
+<li class="nav-item topbar-icon dropdown" *ngIf="authService.isLoggedIn">
+  <a class="nav-link dropdown-toggle" (click)="toggleDropdown('notificationDropdown')"
+    href="javascript:void(0)">
+    <i class="fa fa-bell"></i>
+    <span class="notification" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+  </a>
+  <ul class="dropdown-menu notif-box" [ngClass]="{'show': activeDropdown === 'notificationDropdown'}">
+    <li>
+      <div class="dropdown-title">
+        You have {{ unreadCount }} new notification{{ unreadCount !== 1 ? 's' : '' }}
+        <button class="btn btn-sm btn-link float-right" (click)="markAllAsRead()" 
+                *ngIf="unreadCount > 0" style="padding: 0; font-size: 12px;">
+          Mark all as read
+        </button>
+      </div>
+    </li>
+    <li>
+      <div class="notif-scroll scrollbar-outer" style="max-height: 300px; overflow-y: auto;">
+        <div class="notif-center">
+          <div *ngIf="notifications.length === 0" class="text-center p-3 text-muted">
+            No new notifications
+          </div>
+          <a href="javascript:void(0)" *ngFor="let notification of notifications" 
+             (click)="markAsRead(notification)"
+             [class.unread]="!notification.isRead">
+            <div class="notif-icon notif-primary">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <div class="notif-content">
+              <span class="block">{{ notification.message }}</span>
+              <span class="time">{{ getTimeAgo(notification.createdAt) }}</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </li>
+    <li>
+      <a class="see-all" href="javascript:void(0)">
+        See all notifications<i class="fa fa-angle-right"></i>
+      </a>
+    </li>
+  </ul>
+</li>
 
 
           <!-- User Profile -->

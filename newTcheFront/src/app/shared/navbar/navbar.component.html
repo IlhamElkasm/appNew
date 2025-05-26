@@ -70,17 +70,18 @@
         </ng-container>
 
         <!-- User Menu -->
-        <li *ngIf="authService.isLoggedIn" class="dropdown user-dropdown">
-          <a (click)="toggleDropdown('user')" class="dropdown-toggle">
-            <i class="fa fa-user"></i> {{ authService.currentUserValue?.nom || 'User' }}
-          </a>
-          <ul class="dropdown-menu" [class.show]="activeDropdown === 'user'">
-            <li *ngIf="authService.isAdmin()">
-              <a routerLink="/register-secretaire" routerLinkActive="active">Register Secretary</a>
-            </li>
-            <li><a (click)="logout()">Logout</a></li>
-          </ul>
-        </li>
+        <!-- User Menu -->
+<li *ngIf="authService.isLoggedIn" class="dropdown user-dropdown">
+  <a (click)="toggleDropdown('user')" class="dropdown-toggle">
+    <i class="fa fa-user"></i> {{ authService.currentUserValue?.nom || 'User' }}
+  </a>
+  <ul class="dropdown-menu" [class.show]="activeDropdown === 'user'">
+    <li *ngIf="authService.isAdmin()">
+      <a routerLink="/register-secretaire" routerLinkActive="active">Register Secretary</a>
+    </li>
+    <li><a (click)="logout()">Logout</a></li>
+  </ul>
+</li>
       </ul>
     </nav>
   </div>

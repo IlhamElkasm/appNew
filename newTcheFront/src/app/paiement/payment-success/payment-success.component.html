@@ -1,0 +1,29 @@
+<!-- payment-success.component.html -->
+<div class="success-container">
+  <div class="success-card">
+    <div class="success-icon">
+      <i class="fa fa-check-circle"></i>
+    </div>
+    
+    <h2>Payment Successful!</h2>
+    <p>Your reservation has been confirmed and your payment was processed successfully.</p>
+    
+    <div class="transaction-details">
+      <p>You will receive a confirmation email shortly with all the details.</p>
+      <p>If you have any questions about your reservation, please contact our support team.</p>
+    </div>
+    
+    <div class="action-buttons">
+      <button class="btn btn-primary" (click)="navigateToReservations()">
+        View My Reservations
+      </button>
+      <button class="btn btn-outline-primary" (click)="navigateToFormations()">
+        Browse More Formations
+      </button>
+    </div>
+    
+    <div class="redirect-message">
+      <p>You will be redirected to your reservations in {{countdown}} seconds...</p>
+    </div>
+  </div>
+</div>

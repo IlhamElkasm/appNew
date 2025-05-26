@@ -48,14 +48,27 @@ export class NavbarComponent {
   }
 
   ngOnInit() {
-    const currentUser = this.authService.currentUserValue;
-    console.log('🧠 Current User:', currentUser);
-    console.log('🔐 User Roles:', currentUser?.roles);
-    console.log('👑 Is Admin?', this.authService.isAdmin());
-    console.log('👑 Is Client?', this.authService.isClient());
-    console.log('👑 Is Secretaire?', this.authService.isSecretaire());
-
+  // Log existant
+  const currentUser = this.authService.currentUserValue;
+  console.log('🧠 Current User:', currentUser);
+  console.log('👤 User nom:', currentUser?.nom);
+  console.log('🔐 User Roles:', currentUser?.roles);
+  console.log('👑 Is Admin?', this.authService.isAdmin());
+  console.log('👑 Is Client?', this.authService.isClient());
+  console.log('👑 Is Secretaire?', this.authService.isSecretaire());
+  
+  // Vérification supplémentaire pour le nom
+  if (!currentUser?.nom) {
+    console.warn('⚠️ User nom is empty or undefined!');
+    // Tentative de récupération depuis localStorage
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+      const storedUser = JSON.parse(userJson);
+      console.log('📦 User from localStorage:', storedUser);
+      console.log('👤 Nom from localStorage:', storedUser.nom);
+    }
   }
+}
   
   
 }
