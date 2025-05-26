@@ -3,11 +3,13 @@
   <!-- Sidebar -->
   <div class="sidebar" [ngClass]="{'expanded': sidebarExpanded}">
     <div class="logo">
-      <img src="assets/img/logo.png" alt="Logo">
-      <div class="logo-text">
-        <h1>NEWTECH</h1>
-      </div>
+      <img src="assets/img/LogoNewTche.png" alt="Logo">
     </div>
+
+    <!-- Mobile Menu Toggle -->
+    <!-- <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
+      <span class="menu-icon"></span>
+    </button> -->
 
     <!-- Sidebar Toggle Button (Mobile) -->
     <div class="sidebar-toggle d-block d-md-none" (click)="toggleSidebar()">
@@ -72,45 +74,21 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="fas fa-th"></i>
-          <span class="nav-text">Catégories</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="fas fa-users"></i>
-          <span class="nav-text">Utilisateurs</span>
-        </a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="/location">
           <i class="fas fa-map-marker-alt"></i>
           <span class="nav-text">Location</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="fas fa-chart-bar"></i>
-          <span class="nav-text">Statistiques</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="fas fa-cog"></i>
-          <span class="nav-text">Paramètres</span>
         </a>
       </li>
     </ul>
   </div>
 
   <!-- Main Content -->
-  <div class="main-content" [ngClass]="{'sidebar-collapsed': !sidebarExpanded}">
+  <div class="main-content" [class.active]="mobileMenuOpen">
     <!-- Mobile Menu Toggle -->
     <div class="mobile-menu-toggle d-md-none">
-      <button class="btn btn-sm btn-outline-secondary" (click)="toggleMobileMenu()">
-        <i class="fas" [ngClass]="mobileMenuOpen ? 'fa-times' : 'fa-bars'"></i>
-      </button>
+       <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
+      <span class="menu-icon"></span>
+    </button>
     </div>
 
     <!-- Search Bar -->
@@ -145,7 +123,8 @@
 
           <!-- Notifications -->
           <li class="nav-item topbar-icon dropdown">
-            <a class="nav-link dropdown-toggle" (click)="toggleDropdown('notificationDropdown')" href="javascript:void(0)">
+            <a class="nav-link dropdown-toggle" (click)="toggleDropdown('notificationDropdown')"
+              href="javascript:void(0)">
               <i class="fa fa-bell"></i>
               <span class="notification">4</span>
             </a>
@@ -171,35 +150,6 @@
               <li><a class="see-all" href="#">See all notifications<i class="fa fa-angle-right"></i></a></li>
             </ul>
           </li>
-<!-- 
-          <li class="nav-item topbar-icon dropdown">
-            <a class="nav-link dropdown-toggle" (click)="toggleDropdown('notificationDropdown')"
-              href="javascript:void(0)">
-              <i class="fa fa-bell"></i>
-              <span class="notification" *ngIf="notifications.length > 0">{{ notifications.length }}</span>
-            </a>
-            <ul class="dropdown-menu notif-box" [ngClass]="{'show': activeDropdown === 'notificationDropdown'}">
-              <li>
-                <div class="dropdown-title">You have {{ notifications.length }} new notifications</div>
-              </li>
-              <li>
-                <div class="notif-scroll scrollbar-outer">
-                  <div class="notif-center" *ngFor="let notif of notifications">
-                    <a href="#">
-                      <div class="notif-icon notif-success">
-                        <i class="fa fa-bell"></i>
-                      </div>
-                      <div class="notif-content">
-                        <span class="block">{{ notif.message }}</span>
-                        <span class="time">{{ notif.createdAt | date:'short' }}</span>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </li>
-              <li><a class="see-all" href="#">See all notifications<i class="fa fa-angle-right"></i></a></li>
-            </ul>
-          </li> -->
 
 
           <!-- User Profile -->
@@ -361,33 +311,31 @@
   <div class="container">
     <div class="footer-content">
       <div class="footer-col">
-        <h3>Address</h3>
+      <h3 class="footer-title">Coordonnées</h3>
+      <p><strong>Adresse :</strong> Résidence Atlantic, IMM H, App.3 CYM - Rabat</p>
+      <p><i class="fas fa-envelope"></i> info@newtech.ma</p>
+      <p><i class="fas fa-phone"></i> +212 537690030</p>
+      <p><i class="fas fa-fax"></i> +212 537690033</p>
+    </div>
+      <div class="footer-col">
+        <h3>À propos</h3>
         <ul>
-          <li>123 Street, City, Country</li>
-          <li>info.com</li>
-          <li>+123 456 7890</li>
+          <li><a href="#">Notre mission</a></li>
+          <li><a href="#">Nos services</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Partenaires</a></li>
         </ul>
       </div>
-      <div class="footer-col">
-        <h3>Services</h3>
-        <ul>
-          <li><a href="#">Web Development</a></li>
-          <li><a href="#">App Development</a></li>
-          <li><a href="#">UI/UX Design</a></li>
-          <li><a href="#">Consultation</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
+      <div class="social-icons">
         <h3>Quick Links</h3>
         <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms & Condition</a></li>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
         </ul>
       </div>
       <div class="footer-col">
-        <h3>Newsletter</h3>
+      
         <form>
           <div class="form-group">
             <input type="email" class="form-control" placeholder="Your Email">

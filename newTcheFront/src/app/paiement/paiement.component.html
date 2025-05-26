@@ -1,210 +1,171 @@
-<!-- Payment Section -->
-<!-- <section class="payment-section">
-    <div class="container">
-        <div class="payment-form">
-            <h3 class="payment-title">Payment</h3>
-            <div class="payment-details">
-                <div class="payment-row">
-                    <span>ProMakers Standard</span>
-                    <span>$9.99/month</span>
-                </div>
-                <div class="payment-row">
-                    <span>Referral Bonuses</span>
-                    <span>-$2.00</span>
-                </div>
-                <div class="payment-row">
-                    <span>Taxes</span>
-                    <span>20%</span>
-                </div>
-                <div class="payment-row">
-                    <span>Automatic renewal (cancel anytime, after 30 days trial)</span>
-                    <span>$0</span>
-                </div>
-            </div>
-            <div class="payment-method">
-                <img src="assets/paiement/visa.png" alt="Visa">
-                <img src="assets/paiement/card.png" alt="Mastercard">
-            </div>
-            <div class="form-group">
-                <label for="cardNumber">Card Number</label>
-                <input type="text" id="cardNumber" class="form-control" placeholder="0000 0000 0000 0000">
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="expiryDate">Expiry Date</label>
-                    <input type="text" id="expiryDate" class="form-control" placeholder="MM/YY">
-                </div>
-                <div class="form-group">
-                    <label for="cvv">CVV</label>
-                    <input type="text" id="cvv" class="form-control" placeholder="123">
-                </div>
-            </div>
-            <button type="submit" class="payment-btn">Pay</button>
-        </div>
-    </div>
-</section> -->
-
+<!-- payment.component.html -->
 <div class="container d-flex justify-content-center mt-5 mb-5">
-
-
-
-    <div class="row g-3">
-
-        <div class="col-md-6">
-
-            <span>Payment Method</span>
-            <div class="card">
-
-                <div class="accordion" id="accordionExample">
-
-                    <div class="card">
-                        <!-- <div class="card-header p-0" id="headingTwo">
-                            <h2 class="mb-0">
-                                <button
-                                    class="btn btn-light btn-block text-left collapsed p-3 rounded-0 border-bottom-custom"
-                                    type="button" data-toggle="collapse" data-target="#collapseTwo"
-                                    aria-expanded="false" aria-controls="collapseTwo">
-                                    <div class="d-flex align-items-center justify-content-between">
-
-                                        <span>Paypal</span>
-                                        <img src="https://i.imgur.com/7kQEsHU.png" width="30">
-
-                                    </div>
-                                </button>
-                            </h2>
-                        </div> -->
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                            data-parent="#accordionExample">
-                            <div class="card-body">
-                                <input type="text" class="form-control" placeholder="Paypal email">
-                            </div>
-                        </div>
+  <div class="row g-3 w-100">
+    <div class="col-md-6">
+      <span class="fw-bold fs-5 mb-2 d-block">Payment Method</span>
+      <div class="card shadow">
+        <div class="accordion" id="paymentAccordion">
+          <div class="card border-0">
+            <div class="card-header bg-white p-0">
+              <h2 class="mb-0">
+                <button class="btn btn-light btn-block text-start p-3 rounded-0 w-100" type="button">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <span class="fw-bold">Credit card</span>
+                    <div class="icons">
+                      <img *ngFor="let card of cardTypes" [src]="card.img" width="30" class="mx-1" [alt]="card.name">
                     </div>
-
-                    <div class="card">
-                        <div class="card-header p-0">
-                            <h2 class="mb-0">
-                                <button class="btn btn-light btn-block text-left p-3 rounded-0" data-toggle="collapse"
-                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <div class="d-flex align-items-center justify-content-between">
-
-                                        <span>Credit card</span>
-                                        <div class="icons">
-                                            <img src="https://i.imgur.com/2ISgYja.png" width="30">
-                                            <img src="https://i.imgur.com/W1vtnOV.png" width="30">
-                                            <img src="https://i.imgur.com/35tC99g.png" width="30">
-                                            <img src="https://i.imgur.com/2ISgYja.png" width="30">
-                                        </div>
-
-                                    </div>
-                                </button>
-                            </h2>
-                        </div>
-
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                            data-parent="#accordionExample">
-                            <div class="card-body payment-card-body">
-
-                                <span class="font-weight-normal card-text">Card Number</span>
-                                <div class="input">
-
-                                    <i class="fa fa-credit-card"></i>
-                                    <input type="text" class="form-control" placeholder="0000 0000 0000 0000">
-
-                                </div>
-
-                                <div class="row mt-3 mb-3">
-
-                                    <div class="col-md-6">
-
-                                        <span class="font-weight-normal card-text">Expiry Date</span>
-                                        <div class="input">
-
-                                            <i class="fa fa-calendar"></i>
-                                            <input type="text" class="form-control" placeholder="MM/YY">
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <div class="col-md-6">
-
-                                        <span class="font-weight-normal card-text">CVC/CVV</span>
-                                        <div class="input">
-
-                                            <i class="fa fa-lock"></i>
-                                            <input type="text" class="form-control" placeholder="000">
-
-                                        </div>
-
-                                    </div>
-
-
-                                </div>
-
-                                <span class="text-muted certificate-text"><i class="fa fa-lock"></i> Your transaction is
-                                    secured with ssl certificate</span>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
+                  </div>
+                </button>
+              </h2>
             </div>
 
-        </div>
-
-        <div class="col-md-6">
-            <span>Summary</span>
-
-            <div class="card">
-
-                <div class="d-flex justify-content-between p-3">
-
-                    <div class="d-flex flex-column">
-
-                        <span>Pro(Billed Monthly)</span>
-
-                    </div>
-
-                    <div class="mt-1">
-                        <sup class="super-price">$9.99</sup>
-                        <span class="super-month">/Month</span>
-                    </div>
-
+            <div class="card-body payment-card-body p-3">
+              <form [formGroup]="paymentForm" (ngSubmit)="processPayment()">
+                <div class="mb-3">
+                  <label for="cardholderName" class="form-label">Cardholder Name</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="cardholderName"
+                      formControlName="cardholderName" 
+                      placeholder="John Doe"
+                    >
+                  </div>
+                  <div *ngIf="isFieldInvalid('cardholderName')" class="text-danger small mt-1">
+                    Please enter the cardholder name
+                  </div>
                 </div>
 
-                <hr class="mt-0 line">
-                <div class="p-3 d-flex justify-content-between">
+                <div class="mb-3">
+                  <label for="cardNumber" class="form-label">Card Number</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="cardNumber"
+                      formControlName="cardNumber" 
+                      placeholder="1234 5678 9012 3456"
+                      (input)="formatCardNumber($event)"
+                      maxlength="19"
+                    >
+                  </div>
+                  <div *ngIf="isFieldInvalid('cardNumber')" class="text-danger small mt-1">
+                    Please enter a valid 16-digit card number
+                  </div>
+                </div>
 
-                    <div class="d-flex flex-column">
-
-                        <span>Today you pay(US Dollars)</span>
-                        <small>After 30 days $9.59</small>
-
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="expiryDate" class="form-label">Expiry Date</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                      <input 
+                        type="text" 
+                        class="form-control" 
+                        id="expiryDate"
+                        formControlName="expiryDate" 
+                        placeholder="MM/YY"
+                        (input)="formatExpiryDate($event)"
+                        maxlength="5"
+                      >
                     </div>
-                    <span>$0</span>
+                    <div *ngIf="isFieldInvalid('expiryDate')" class="text-danger small mt-1">
+                      Please enter a valid expiry date (MM/YY)
+                    </div>
+                  </div>
 
-
-
+                  <div class="col-md-6 mb-3">
+                    <label for="cvv" class="form-label">CVV/CVC</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                      <input 
+                        type="text" 
+                        class="form-control" 
+                        id="cvv"
+                        formControlName="cvv" 
+                        placeholder="123"
+                        maxlength="4"
+                      >
+                    </div>
+                    <div *ngIf="isFieldInvalid('cvv')" class="text-danger small mt-1">
+                      Please enter a valid CVV/CVC code
+                    </div>
+                  </div>
                 </div>
 
-
-                <div class="p-3">
-
-                    <button class="btn btn-primary btn-block free-button">Try it free for 30 days</button>
-
+                <div class="mt-3 text-muted">
+                  <i class="fa fa-lock"></i> Your transaction is secured with SSL encryption
                 </div>
-
-
-
-
+              </form>
             </div>
+          </div>
         </div>
-
+      </div>
     </div>
 
-
+    <div class="col-md-6">
+      <span class="fw-bold fs-5 mb-2 d-block">Order Summary</span>
+      <div class="card shadow">
+        <div class="card-body">
+          <div *ngIf="reservation && reservation.formation; else noReservation">
+            <div class="d-flex justify-content-between mb-3 align-items-center">
+              <div>
+                <h5 class="mb-0">{{ reservation.formation.title }}</h5>
+                <p class="text-muted mb-0 small">{{ reservation.formation.startDate | date:'mediumDate' }} - {{ reservation.formation.endDate | date:'mediumDate' }}</p>
+              </div>
+              <img 
+                [src]="reservation.formation.imageUrl" 
+                [alt]="reservation.formation.title" 
+                class="img-thumbnail" 
+                style="max-width: 80px; max-height: 80px;"
+              >
+            </div>
+            
+            <hr>
+            
+            <div class="d-flex justify-content-between mb-2">
+              <span>Formation Price:</span>
+              <span class="fw-bold">{{ reservation.formation.price | currency:'DH' }}</span>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+              <span>Total:</span>
+              <span class="fw-bold fs-5">{{ reservation.formation.price | currency:'DH' }}</span>
+            </div>
+            
+            <hr>
+            
+            <button 
+              type="submit" 
+              class="btn btn-primary w-100 py-2 mt-3" 
+              [disabled]="paymentForm.invalid || loading"
+              (click)="processPayment()"
+            >
+              <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              Complete Payment
+            </button>
+            
+            <button 
+              type="button" 
+              class="btn btn-outline-secondary w-100 py-2 mt-2" 
+              routerLink="/reservations"
+            >
+              Cancel
+            </button>
+          </div>
+          
+          <ng-template #noReservation>
+            <div class="text-center p-4">
+              <i class="fa fa-exclamation-circle fa-3x text-warning mb-3"></i>
+              <p>No reservation selected for payment.</p>
+              <button class="btn btn-secondary" routerLink="/reservations">View My Reservations</button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

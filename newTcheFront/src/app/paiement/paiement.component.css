@@ -1,155 +1,79 @@
-/* Payment Form */
-/* .payment-form {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-.payment-title {
-    font-size: 20px;
-    margin-bottom: 20px;
-}
-
-.payment-details {
-    margin-bottom: 20px;
-}
-
-.payment-method {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.payment-method img {
-    height: 24px;
-}
-
-.payment-btn {
-    width: 100%;
-    padding: 12px;
-    background-color: #1DA1F2;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 20px;
-} */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800&display=swap");
-
-
-body {
-    background-color: #f5eee7;
-    font-family: "Poppins", sans-serif;
-    font-weight: 300;
-}
-
-.container {
-
-    height: 100vh;
-
-}
-
+/* payment.component.css */
 .card {
-
-    border: none;
+  border: none;
+  border-radius: 10px;
 }
 
 .card-header {
-    padding: .5rem 1rem;
-    margin-bottom: 0;
-    background-color: rgba(0, 0, 0, .03);
-    border-bottom: none;
+  border-bottom: 0;
+  background-color: #fff;
 }
 
 .btn-light:focus {
-    color: #212529;
-    background-color: #e2e6ea;
-    border-color: #dae0e5;
-    box-shadow: 0 0 0 0.2rem rgba(216, 217, 219, .5);
+  box-shadow: none;
+}
+
+.payment-card-body {
+  background-color: #f8f9fa;
+  border-radius: 0 0 10px 10px;
+}
+
+.input-group-text {
+  background-color: #fff;
+  border-right: none;
 }
 
 .form-control {
-
-    height: 50px;
-    border: 2px solid #eee;
-    border-radius: 6px;
-    font-size: 14px;
+  border-left: none;
 }
 
 .form-control:focus {
-    color: #495057;
-    background-color: #fff;
-    border-color: #039be5;
-    outline: 0;
-    box-shadow: none;
-
+  box-shadow: none;
+  border-color: #ced4da;
 }
 
-.input {
-
-    position: relative;
+.input-group:focus-within .input-group-text,
+.input-group:focus-within .form-control {
+  border-color: #86b7fe;
 }
 
-.input i {
-
-    position: absolute;
-    top: 16px;
-    left: 11px;
-    color: #989898;
+/* Custom styling for input fields */
+.form-control::placeholder {
+  color: #c2c2c2;
+  font-size: 0.9rem;
 }
 
-.input input {
-
-    text-indent: 25px;
+/* Animation for button */
+.btn-primary {
+  transition: all 0.3s ease;
 }
 
-.card-text {
-
-    font-size: 13px;
-    margin-left: 6px;
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.certificate-text {
-
-    font-size: 12px;
+.btn-primary:active {
+  transform: translateY(0);
 }
 
-
-.billing {
-    font-size: 11px;
+/* Card image hover effects */
+.icons img {
+  transition: transform 0.3s ease;
 }
 
-.super-price {
-
-    top: 0px;
-    font-size: 22px;
+.icons img:hover {
+  transform: scale(1.1);
 }
 
-.super-month {
-
-    font-size: 11px;
-}
-
-
-.line {
-    color: #bfbdbd;
-}
-
-.free-button {
-
-    background: #1565c0;
-    height: 52px;
-    font-size: 15px;
-    border-radius: 8px;
-}
-
-
-.payment-card-body {
-
-    flex: 1 1 auto;
-    padding: 24px 1rem !important;
-
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .row.g-3 {
+    flex-direction: column-reverse;
+  }
+  
+  .col-md-6 {
+    width: 100%;
+    margin-bottom: 20px;
+  }
 }

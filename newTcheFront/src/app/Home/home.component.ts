@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Projet } from '../Model/Projet';
 import { ProjetService } from '../Service/projet.service';
@@ -16,13 +16,14 @@ import { ReservationService } from '../Service/reservation.service';
 export class HomeComponent implements OnInit {
   projets: Projet[] = [];
   formations: Formation[] = [];
+  filteredFormations: Formation[] = [];
   loading = false;
-
   newClientCount: number = 0;
   formationCount: number = 0;
+  searchTerm: string = '';
 
   constructor(
-    private projetService: ProjetService, 
+    private projetService: ProjetService,
     private formationService: FormationService,
     public authService: AuthService,
     private toastr: ToastrService,
@@ -30,22 +31,15 @@ export class HomeComponent implements OnInit {
     public router: Router
   ) {}
 
-  ngOnInit() : void {
-
-     this.formationService.getFormationCount()
-      .subscribe((count) => {
-        this.formationCount = count;
-      });
+  ngOnInit(): void {
+    this.formationService.getFormationCount().subscribe((count) => {
+      this.formationCount = count;
+    });
     this.loadProjets();
     this.getFormations();
     this.logUserInfo();
-
     this.loadNewClientCount();
   }
-
-
-
-
 
   logUserInfo() {
     const currentUser = this.authService.currentUserValue;
@@ -56,43 +50,25 @@ export class HomeComponent implements OnInit {
     console.log('👑 Is Secretaire?', this.authService.isSecretaire());
   }
 
-  // viewDetails(id?: number): void {
-  //   if (id === undefined) {
-  //     console.warn('Formation ID is undefined. Skipping navigation.');
-  //     return;
-  //   }
-  //   this.router.navigate(['/formation-details', id]);
-  // }
-  
-
   loadNewClientCount() {
     this.authService.getNewClientCount().subscribe(count => {
       this.newClientCount = count;
     });
   }
 
-
   viewDetails(id: number): void {
-  if (!this.authService.isLoggedIn) {
-    // 🚫 User is not logged in
-    alert('Vous devez être connecté pour voir ou réserver des formations, Non Connecté');
-    this.router.navigate(['/login']);
-    return;
+    if (!this.authService.isLoggedIn) {
+      alert('Vous devez être connecté pour voir ou réserver des formations, Non Connecté');
+      this.router.navigate(['/login']);
+      return;
+    }
+    if (!this.authService.isClient()) {
+      this.toastr.warning('Seuls les clients peuvent réserver des formations. Veuillez utiliser un compte client Compte client Requis');
+      this.router.navigate(['/signup']);
+      return;
+    }
+    this.router.navigate(['/formation-details', id]);
   }
-
-  if (!this.authService.isClient()) {
-    // ⚠️ User is logged in but not a client
-    this.toastr.warning('Seuls les clients peuvent réserver des formations. Veuillez utiliser un compte client Compte client Requis');
-    this.router.navigate(['/signup']);
-    return;
-  }
-
-  // ✅ User is logged in and is a client
-  this.router.navigate(['/formation-details', id]);
-}
-
-  
-
 
   loadProjets() {
     this.projetService.getProjects().subscribe({
@@ -109,6 +85,7 @@ export class HomeComponent implements OnInit {
     this.formationService.getAllFormations().subscribe({
       next: (data: Formation[]) => {
         this.formations = data;
+        this.filteredFormations = data; // initialize
       },
       error: (error) => {
         console.error('Error loading formations:', error);
@@ -116,4 +93,10 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  onSearchChange() {
+    const term = this.searchTerm.trim().toLowerCase();
+    this.filteredFormations = this.formations.filter(f =>
+      f.title.toLowerCase().startsWith(term)
+    );
+  }
 }

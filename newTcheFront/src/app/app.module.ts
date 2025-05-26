@@ -27,6 +27,7 @@ import { FormationDetailsComponent } from './Formations/formation-details/format
 import { DashboardAdminComponent } from './Dashboard/dashboard-admin/dashboard-admin.component';
 import { LocationComponent } from './Home/location/location.component';
 import { FormationDetail2Component } from './Formations/formation-detail2/formation-detail2.component';
+import { PaymentSuccessComponent } from './paiement/payment-success/payment-success.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +49,7 @@ import { FormationDetail2Component } from './Formations/formation-detail2/format
     DashboardAdminComponent,
     LocationComponent,
     FormationDetail2Component,
+    PaymentSuccessComponent,
   ],
   imports: [
     BrowserModule,

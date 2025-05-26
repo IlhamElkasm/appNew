@@ -28,7 +28,7 @@ public class UserPrincipal implements UserDetails, Serializable {
 
     private Collection<? extends GrantedAuthority> authorities;
     private boolean active;
-    // Dans UserPrincipal.java - Ne pas ajouter "ROLE_"
+
     public static UserPrincipal create(User user) {
         List<GrantedAuthority> authorities = (user.getRoles() != null) ?
                 user.getRoles().stream()
@@ -38,12 +38,28 @@ public class UserPrincipal implements UserDetails, Serializable {
 
         return new UserPrincipal(
                 user.getId(),
-                user.getNom(),
+                user.getNom() != null ? user.getNom() : "", // Eviter les valeurs null
                 user.getEmail(),
                 user.getMotDePasse(),
                 authorities,
                 user.isActive()
         );
+    // Dans UserPrincipal.java - Ne pas ajouter "ROLE_"
+//    public static UserPrincipal create(User user) {
+//        List<GrantedAuthority> authorities = (user.getRoles() != null) ?
+//                user.getRoles().stream()
+//                        .map(role -> new SimpleGrantedAuthority(role.toString()))
+//                        .collect(Collectors.toList())
+//                : List.of();
+//
+//        return new UserPrincipal(
+//                user.getId(),
+//                user.getNom(),
+//                user.getEmail(),
+//                user.getMotDePasse(),
+//                authorities,
+//                user.isActive()
+//        );
     }
 
 
@@ -64,6 +80,8 @@ public class UserPrincipal implements UserDetails, Serializable {
 //        );
 //    }
 
+
+
     @Override
     public String getUsername() {
         return email;
@@ -73,6 +91,7 @@ public class UserPrincipal implements UserDetails, Serializable {
     public String getPassword() {
         return password;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
@@ -97,5 +116,9 @@ public class UserPrincipal implements UserDetails, Serializable {
     // Méthode pratique pour obtenir l'ID de l'utilisateur
     public Long getUserId() {
         return id;
+    }
+
+    public String getNom() {
+        return nom;
     }
 }

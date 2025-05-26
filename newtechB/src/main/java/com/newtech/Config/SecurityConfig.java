@@ -94,6 +94,7 @@ public class SecurityConfig {
 
                                 .requestMatchers(mvc.pattern("/api/formations/admin/**")).hasRole("ADMIN")
                                 .requestMatchers(mvc.pattern("/api/reservations/client/**")).hasRole("CLIENT")
+                                .requestMatchers(mvc.pattern("/api/payments/**")).hasRole("CLIENT")
                                 .requestMatchers(mvc.pattern("/api/client/**")).hasRole("CLIENT")
                                 .requestMatchers(mvc.pattern("/api/secretaire/**")).hasRole("SECRETAIRE")
                                 .anyRequest().authenticated()

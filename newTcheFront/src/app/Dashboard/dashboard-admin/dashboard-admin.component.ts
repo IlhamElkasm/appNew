@@ -14,12 +14,14 @@ import { Notification } from 'src/app/Model/Notification';
 export class DashboardAdminComponent {
 
 
-  mobileMenuOpen = false;
-  activeDropdown: string | null = null;
+
   sidebarExpanded = true; // Add this property
   clients: ClientRegistration[] = [];
   error: string = '';
   newReservationCount: number = 0
+
+  mobileMenuOpen = false;
+  activeDropdown: string | null = null;
 
 
   newClientCount: number = 0;
@@ -32,15 +34,15 @@ export class DashboardAdminComponent {
   ) { }
 
 
-  toggleMobileMenu(): void {
+   toggleMobileMenu(): void {
     this.mobileMenuOpen = !this.mobileMenuOpen;
-
+    
     // Close any open dropdowns when toggling mobile menu
     if (!this.mobileMenuOpen) {
       this.activeDropdown = null;
     }
   }
-
+  
   toggleDropdown(dropdownName: string): void {
     if (this.activeDropdown === dropdownName) {
       this.activeDropdown = null;
@@ -48,6 +50,8 @@ export class DashboardAdminComponent {
       this.activeDropdown = dropdownName;
     }
   }
+
+  
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/home']);

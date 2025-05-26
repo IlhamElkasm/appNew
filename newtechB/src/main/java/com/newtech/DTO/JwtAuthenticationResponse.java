@@ -9,11 +9,14 @@ import java.util.Set;
 @AllArgsConstructor
 public class JwtAuthenticationResponse {
     private String accessToken;
-    private String tokenType = "Bearer";
-    private Set<String> roles;  // Keep as String for frontend compatibility
+    private String tokenType;
+    private Set<String> roles;
+    private String nom;
 
     public JwtAuthenticationResponse(String accessToken, Set<String> roles) {
         this.accessToken = accessToken;
         this.roles = roles;
+        this.tokenType = "Bearer";
+        this.nom = ""; // Initialiser avec une chaîne vide au lieu de null
     }
 }

@@ -6,6 +6,7 @@ import com.newtech.Exception.EmailAlreadyExistsException;
 import com.newtech.Services.Security.IMService.ClientRegistrationService;
 import com.newtech.Services.Security.IMService.SecretaireRegistrationService;
 import com.newtech.Services.Security.JwtTokenProvider;
+import com.newtech.Services.Security.UserPrincipal;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -92,10 +93,10 @@ public class RegistrationController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toSet());
 
+
         log.info("User logged in successfully: {}", loginRequest.getEmail());
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, roles));
     }
-
 
 //    @PostMapping("/login")
 //    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -111,14 +112,25 @@ public class RegistrationController {
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
 //        String jwt = tokenProvider.generateToken(authentication);
 //
-//        // Extract roles from the authentication object
+//        // Récupération de l'utilisateur connecté
+//        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+//
+//        // Ajout de log pour debugging
+//        log.info("User principal nom: {}", userPrincipal.getNom());
+//
 //        Set<String> roles = authentication.getAuthorities().stream()
-//                .map(grantedAuthority -> grantedAuthority.getAuthority())
+//                .map(GrantedAuthority::getAuthority)
 //                .collect(Collectors.toSet());
 //
 //        log.info("User logged in successfully: {}", loginRequest.getEmail());
-//        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, roles));  // Return the token and roles
+//
+//        // Création de la réponse avec le nom utilisateur
+//        JwtAuthenticationResponse response = new JwtAuthenticationResponse(jwt, "Bearer", roles, userPrincipal.getNom());
+//        log.info("Auth response contains nom: {}", response.getNom());
+//
+//        return ResponseEntity.ok(response);
 //    }
+
 
 
     @GetMapping("/clients")

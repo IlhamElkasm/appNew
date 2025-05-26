@@ -52,8 +52,10 @@ export class FormationDetailsComponent implements OnInit {
         alert('Reservation submitted successfully');
         this.loading = false;
   
-        // ✅ Navigate after success
-        this.router.navigate(['/paiement']);
+        this.router.navigate(['/paiement'], {
+  queryParams: { reservationId: response.id } // ou la bonne clé selon ce que retourne ton backend
+});
+
       },
       error: (error) => {
         console.error('Error creating reservation:', error);

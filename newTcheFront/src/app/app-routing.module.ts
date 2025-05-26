@@ -18,6 +18,7 @@ import { FormationDetailsComponent } from './Formations/formation-details/format
 import { DashboardAdminComponent } from './Dashboard/dashboard-admin/dashboard-admin.component';
 import { RedirectResolver } from './core/guards/redirect-resolver.guard';
 import { LocationComponent } from './Home/location/location.component';
+import { PaymentSuccessComponent } from './paiement/payment-success/payment-success.component';
 
 const routes: Routes = [
   // Route par défaut qui utilise un resolver pour rediriger en fonction du rôle
@@ -67,7 +68,7 @@ const routes: Routes = [
     path: 'projet',
     component: CreateProjetComponent,
     canActivate: [AuthGuard],
-    data: { roles: [UserRole.ADMIN, UserRole.CLIENT] }
+    data: { roles: [UserRole.ADMIN, UserRole.SECRETAIRE] }
   },
  
   // 🔹 إدارة التكوينات (Formations)
@@ -98,7 +99,15 @@ const routes: Routes = [
   { 
     path: 'paiement', 
     component: PaiementComponent, 
-    canActivate: [AuthGuard] 
+    canActivate: [AuthGuard] ,
+    data: { roles: [UserRole.CLIENT] }
+  },
+
+  { 
+    path: 'payment-success', 
+    component: PaymentSuccessComponent, 
+    canActivate: [AuthGuard] ,
+    data: { roles: [UserRole.CLIENT] }
   },
   // 🔹 إدارة الأخطاء
   { path: '**', redirectTo: '/home' }
