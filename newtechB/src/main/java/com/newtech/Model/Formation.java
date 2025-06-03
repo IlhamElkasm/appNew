@@ -24,9 +24,6 @@ public class Formation {
     @Column(length = 1000)
     private String description;
 
-    private LocalDate startDate;
-    private LocalDate endDate;
-
     @Column(nullable = false)
     private Double price;
 

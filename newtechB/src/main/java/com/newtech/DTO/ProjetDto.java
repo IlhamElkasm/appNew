@@ -9,17 +9,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProjetDto {
-
-
     private Long id;
     private String titre;
     private String description;
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date dateDebut;
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date dateFin;
 
     private String imageUrl;
 

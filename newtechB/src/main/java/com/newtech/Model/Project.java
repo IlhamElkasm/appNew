@@ -21,8 +21,6 @@ public class Project {
     @Column(length = 1000)
     private String description;
 
-    private Date dateDebut;
-    private Date dateFin;
 
     @Column(name = "image_url")
     private String imageUrl;

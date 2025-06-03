@@ -30,7 +30,7 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getAllProjects());
     }
 
-    @GetMapping("/admin/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ProjetDto> getProjectById(@PathVariable Long id) {
         ProjetDto projetDto = projectService.getProjectById(id);
         return projetDto != null ? ResponseEntity.ok(projetDto) : ResponseEntity.notFound().build();

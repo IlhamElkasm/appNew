@@ -16,10 +16,6 @@ public class FormationDto {
     private Long id;
     private String title;
     private String description;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startDate;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate endDate;
     private Double price;
     private String imageUrl;
 }

@@ -31,9 +31,9 @@ public class AdminInitializer {
 
                 // Create Admin entity directly
                 Admin admin = new Admin();
-                admin.setNom("Admin");
-                admin.setEmail("admin@example.com");
-                admin.setMotDePasse(passwordEncoder.encode("Admin@123"));
+                admin.setNom("newtechemultimedia");
+                admin.setEmail("newtechemultimedia@gmail.com");
+                admin.setMotDePasse(passwordEncoder.encode("newTeche@25"));
                 admin.setRole(UserRole.ADMIN);
                 admin.setRoles(Collections.singleton(UserRole.ADMIN));
 

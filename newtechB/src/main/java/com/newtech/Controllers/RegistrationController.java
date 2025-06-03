@@ -73,7 +73,6 @@ public class RegistrationController {
         }
     }
 
-    // Dans RegistrationController.java - Éliminer le remplacement
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         log.info("Processing login request for user: {}", loginRequest.getEmail());
@@ -88,14 +87,19 @@ public class RegistrationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.generateToken(authentication);
 
-        // Simplement collecter les autorités sans modification
+        // Now we can safely cast to UserPrincipal since UserDetailsServiceImpl returns it
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
         Set<String> roles = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toSet());
 
+        log.info("User logged in successfully: {} with name: {}", loginRequest.getEmail(), userPrincipal.getNom());
 
-        log.info("User logged in successfully: {}", loginRequest.getEmail());
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, roles));
+        // Create response with user's name
+        JwtAuthenticationResponse response = new JwtAuthenticationResponse(jwt, "Bearer", roles, userPrincipal.getNom());
+
+        return ResponseEntity.ok(response);
     }
 
 //    @PostMapping("/login")

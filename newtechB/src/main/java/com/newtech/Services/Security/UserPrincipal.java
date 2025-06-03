@@ -30,7 +30,7 @@ public class UserPrincipal implements UserDetails, Serializable {
     private boolean active;
 
     public static UserPrincipal create(User user) {
-        List<GrantedAuthority> authorities = (user.getRoles() != null) ?
+        List<GrantedAuthority> authorities = (user.getRoles() != null && !user.getRoles().isEmpty()) ?
                 user.getRoles().stream()
                         .map(role -> new SimpleGrantedAuthority(role.toString()))
                         .collect(Collectors.toList())
@@ -38,12 +38,13 @@ public class UserPrincipal implements UserDetails, Serializable {
 
         return new UserPrincipal(
                 user.getId(),
-                user.getNom() != null ? user.getNom() : "", // Eviter les valeurs null
+                user.getNom() != null ? user.getNom() : "", // Handle null nom
                 user.getEmail(),
                 user.getMotDePasse(),
                 authorities,
                 user.isActive()
         );
+
     // Dans UserPrincipal.java - Ne pas ajouter "ROLE_"
 //    public static UserPrincipal create(User user) {
 //        List<GrantedAuthority> authorities = (user.getRoles() != null) ?
