@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { Formation } from 'src/app/Model/Formation';
 import { CloudinaryService } from 'src/app/Service/cloudinary.service';
 import { FormationService } from 'src/app/Service/formation.service';
-
 @Component({
   selector: 'app-modifier-formation',
   templateUrl: './modifier-formation.component.html',
@@ -16,25 +15,14 @@ export class ModifierFormationComponent implements OnInit {
   @Input() formation: Formation = {
     title: '',
     description: '',
-    startDate: new Date(),
-    endDate: new Date(),
     price: 0,
     imageUrl: ''
   };
-  
+
   @Output() formSubmitted = new EventEmitter<Formation>();
   @Output() cancel = new EventEmitter<void>();
 
   selectedFile: File | null = null;
-
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0] as File;
-  }
-
-
-  onCancel() {
-    this.cancel.emit();
-  }
   isUploading = false;
   formationId!: number;
 
@@ -43,8 +31,7 @@ export class ModifierFormationComponent implements OnInit {
     private router: Router,
     private formationService: FormationService,
     private cloudinaryService: CloudinaryService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.formationId = +this.route.snapshot.params['id'];
@@ -53,17 +40,18 @@ export class ModifierFormationComponent implements OnInit {
 
   loadFormation() {
     this.formationService.getFormation(this.formationId).subscribe({
-      next: (formation) => {
-        this.formation = {
-          ...formation,
-          startDate: new Date(formation.startDate),
-          endDate: new Date(formation.endDate)
-        };
-      },
-      error: (err) => {
-        console.error('Error loading formation:', err);
-      }
+      next: (formation) => this.formation = { ...formation },
+      error: (err) => console.error('Error loading formation:', err)
     });
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0] as File;
+  }
+
+  onCancel() {
+    this.cancel.emit();
+    this.router.navigate(['/listformation']);
   }
 
   onSubmit() {
@@ -75,7 +63,7 @@ export class ModifierFormationComponent implements OnInit {
           this.updateFormation();
         },
         error: (err) => {
-          console.error('Upload error:', err);
+          console.error('Image upload failed:', err);
           this.isUploading = false;
         }
       });
@@ -86,11 +74,9 @@ export class ModifierFormationComponent implements OnInit {
 
   private updateFormation() {
     this.formationService.updateFormation(this.formationId, this.formation).subscribe({
-      next: () => {
-        this.router.navigate(['/formations', this.formationId]);
-      },
+      next: () => this.router.navigate(['/listformation']),
       error: (err) => {
-        console.error('Update error:', err);
+        console.error('Update failed:', err);
         this.isUploading = false;
       }
     });

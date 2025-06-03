@@ -65,8 +65,8 @@
 
         <!-- Auth Links -->
         <ng-container *ngIf="!authService.isLoggedIn">
-          <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
-          <li><a routerLink="/register-client" routerLinkActive="active">Register</a></li>
+          <li><a routerLink="/login" routerLinkActive="active">Se connecter</a></li>
+          <li><a routerLink="/register-client" routerLinkActive="active">S'inscrire</a></li>
         </ng-container>
 
         <!-- User Menu -->
@@ -76,9 +76,9 @@
     <i class="fa fa-user"></i> {{ authService.currentUserValue?.nom || 'User' }}
   </a>
   <ul class="dropdown-menu" [class.show]="activeDropdown === 'user'">
-    <li *ngIf="authService.isAdmin()">
+    <!-- <li *ngIf="authService.isAdmin()">
       <a routerLink="/register-secretaire" routerLinkActive="active">Register Secretary</a>
-    </li>
+    </li> -->
     <li><a (click)="logout()">Logout</a></li>
   </ul>
 </li>

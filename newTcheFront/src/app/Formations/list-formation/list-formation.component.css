@@ -1,29 +1,75 @@
-.formation-list-container {
-    padding: 20px;
+.container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #3f51b5;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+table {
+  width: 100%;
+  border-spacing: 0;
+}
+
+.custom-table th {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+  font-weight: bold;
+  text-align: left;
+}
+
+.custom-table td,
+.custom-table th {
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.formation-img {
+  width: 100px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+button[mat-stroked-button] {
+  margin-right: 8px;
+  font-size: 13px;
+}
+
+.no-data {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
   }
-  
-  .formation-item {
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+  .formation-img {
+    width: 80px;
+    height: 60px;
   }
-  
-  button {
-    background-color: #ff4c4c;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
+
+  table {
+    font-size: 13px;
   }
-  
-  button:hover {
-    background-color: #d43f3f;
+
+  button[mat-stroked-button] {
+    font-size: 12px;
+    padding: 4px 8px;
   }
-  
-  img {
-    max-width: 100px;
-    height: auto;
-  }
-  
+}

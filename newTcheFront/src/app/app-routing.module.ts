@@ -19,6 +19,8 @@ import { RedirectResolver } from './core/guards/redirect-resolver.guard';
 import { LocationComponent } from './Home/location/location.component';
 import { PaymentSuccessComponent } from './paiement/payment-success/payment-success.component';
 import { ReservationListComponent } from './Reservation/reservation-list/reservation-list.component';
+import { ModifierProjetComponent } from './Projet/modifier-projet/modifier-projet.component';
+import { ProjectDetailsComponent } from './Projet/project-details/project-details.component';
 
 const routes: Routes = [
   // Route par défaut qui utilise un resolver pour rediriger en fonction du rôle
@@ -95,6 +97,18 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: [UserRole.ADMIN, UserRole.SECRETAIRE] }
   },
+
+   {
+    path: 'edit-projet/:id',
+    component: ModifierProjetComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserRole.ADMIN, UserRole.SECRETAIRE] }
+  },
+
+  { path: 'projects/:id', component: ProjectDetailsComponent,
+    canActivate: [AuthGuard],
+   },
+
   // 🔹 الدفع ورفع الملفات
   { 
     path: 'paiement', 

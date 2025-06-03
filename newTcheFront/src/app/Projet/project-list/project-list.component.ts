@@ -12,6 +12,7 @@ import { ProjetService } from 'src/app/Service/projet.service';
 })
 export class ProjectListComponent implements OnInit {
   projects: any[] = [];
+  displayedColumns: string[] = ['image', 'titre', 'description', 'actions'];
 
   constructor(private projectService: ProjetService, private router: Router) {}
 
@@ -19,24 +20,22 @@ export class ProjectListComponent implements OnInit {
     this.loadProjects();
   }
 
-  // 🔹 Charger la liste des projets
   loadProjects() {
     this.projectService.getProjects().subscribe(data => {
       this.projects = data;
     });
   }
 
-  // 🔹 Supprimer un projet
   deleteProject(id: number) {
     if (confirm('Voulez-vous vraiment supprimer ce projet ?')) {
       this.projectService.deleteProject(id).subscribe(() => {
-        this.loadProjects(); // Rafraîchir la liste après suppression
+        this.loadProjects();
       });
     }
   }
 
-  // 🔹 Aller vers la page d'édition
-  editProject(id: number) {
-    this.router.navigate(['/edit-project', id]); // Redirection vers l'édition
-  }
+ editProject(id: number) {
+  this.router.navigate(['/edit-projet', id]);
+}
+
 }

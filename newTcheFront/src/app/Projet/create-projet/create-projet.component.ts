@@ -12,8 +12,6 @@ export class CreateProjetComponent {
   project: any = {
     titre: '',
     description: '',
-    dateDebut: '',
-    dateFin: '',
     imageUrl: ''
   };
   imageFile?: File;

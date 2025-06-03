@@ -35,10 +35,19 @@ export class HomeComponent implements OnInit {
     this.formationService.getFormationCount().subscribe((count) => {
       this.formationCount = count;
     });
+
+    this.projetService.getProjects().subscribe({
+      next: (data) => this.projets = data,
+      error: (err) => console.error('Erreur de chargement:', err)
+    });
     this.loadProjets();
     this.getFormations();
     this.logUserInfo();
     this.loadNewClientCount();
+  }
+
+   goToDetails(id: number): void {
+    this.router.navigate(['/projects', id]);
   }
 
   logUserInfo() {

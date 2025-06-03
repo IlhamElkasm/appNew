@@ -1,22 +1,16 @@
-<!-- <div class="container">
-  <h2>Modifier le Projet</h2>
+<div class="modifier-container">
+  <h2>📝 Modifier le Projet</h2>
 
   <label>Nom du projet:</label>
-  <input type="text" [(ngModel)]="project.titre" class="form-control" />
+  <input type="text" [(ngModel)]="project.titre" class="form-control" placeholder="Ex: Application E-learning" />
 
   <label>Description:</label>
-  <textarea [(ngModel)]="project.description" class="form-control"></textarea>
-
-  <label>Date Début:</label>
-  <input type="date" [(ngModel)]="project.dateDebut" class="form-control" />
-
-  <label>Date Fin:</label>
-  <input type="date" [(ngModel)]="project.dateFin" class="form-control" />
+  <textarea [(ngModel)]="project.description" class="form-control" rows="4" placeholder="Décrivez le projet..."></textarea>
 
   <label>Image du Projet:</label>
   <input type="file" (change)="onFileSelected($event)" class="form-control" />
 
-  <button (click)="updateProject()" class="btn btn-primary">
-    Mettre à Jour
-  </button>
-</div> -->
+  <img *ngIf="project.imageUrl" [src]="project.imageUrl" class="preview-img" alt="Preview Image" />
+
+  <button (click)="updateProject()" class="btn btn-success mt-3">✅ Mettre à Jour</button>
+</div>

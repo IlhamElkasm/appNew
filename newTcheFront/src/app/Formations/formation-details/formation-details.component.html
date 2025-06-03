@@ -1,45 +1,19 @@
-<!-- <div class="container mt-5" *ngIf="formation">
-    <div class="card shadow-lg rounded">
-      <div class="row g-0">
-        <div class="col-md-5">
-          <img [src]="formation.imageUrl" [alt]="formation.title" class="img-fluid rounded-start h-100 object-fit-cover">
-        </div>
-        <div class="col-md-7">
-          <div class="card-body">
-            <h2 class="card-title text-primary">{{ formation.title }}</h2>
-            <p class="card-text">{{ formation.description }}</p>
-  
-            <ul class="list-group list-group-flush my-3">
-              <li class="list-group-item"><strong>Date:</strong> {{ formation.startDate | date:'mediumDate' }} - {{ formation.endDate | date:'mediumDate' }}</li>
-              <li class="list-group-item"><strong>Price:</strong> {{ formation.price }} USD</li>
-            </ul>
-  
-            <button class="btn btn-success btn-lg mt-3" (click)="reserve(formation)" [disabled]="loading">
-              <i class="bi bi-cart-check-fill"></i> Réserver la Formation
-            </button>
-          </div>
-        </div>
-      </div>
+<div class="popup-view active">
+  <div class="popup-card">
+    <!-- استخدم رمز HTML بدلاً من Font Awesome -->
+    <button class="close-btn" (click)="goBack()" type="button" aria-label="إغلاق">
+      &times;
+    </button>
+     
+    <div class="product-img">
+      <img [src]="formation.imageUrl" alt="formation image">
     </div>
-  </div>
-   -->
 
-   <div class="popup-view active">
-    <div class="popup-card">
-      <a><i class="fas fa-times close-btn" (click)="goBack()"></i></a>
-      
-      <div class="product-img">
-        <img [src]="formation.imageUrl" alt="formation image">
-      </div>
-  
-      <div class="info">
-        <h2>{{ formation.title }}<br>
-          <span>{{ formation.startDate | date:'mediumDate' }} - {{ formation.endDate | date:'mediumDate' }}</span>
-        </h2>
-        <p>{{ formation.description }}</p>
-        <span class="price">{{ formation.price | currency:'DH' }}</span>
-        <a class="add-cart-btn" (click)="reserve(formation)">Réserver</a>
-      </div>
+    <div class="info">
+      <h2>{{ formation.title }}</h2>
+      <p>{{ formation.description }}</p>
+      <span class="price">{{ formation.price | currency:'DH' }}</span>
+      <a class="add-cart-btn" (click)="reserve(formation)">Réserver</a>
     </div>
   </div>
-  
+</div>

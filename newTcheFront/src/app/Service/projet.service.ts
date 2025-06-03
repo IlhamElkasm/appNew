@@ -16,7 +16,7 @@ export class ProjetService {
   }
 
   getProjectById(id: number): Observable<Projet> {
-    return this.http.get<Projet>(`${this.apiUrl}/admin/${id}`);
+    return this.http.get<Projet>(`${this.apiUrl}/${id}`);
   }
 
   addProject(project: Projet): Observable<Projet> {

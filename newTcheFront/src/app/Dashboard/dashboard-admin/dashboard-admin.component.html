@@ -82,10 +82,11 @@
 
       <li class="nav-item">
         <a class="nav-link" href="/ListReservation">
-          <i class="fas fa-map-marker-alt"></i>
-          <span class="nav-text">ReservationList</span>
+          <i class="fas fa-calendar-check"></i>
+          <span class="nav-text">Reservation List</span>
         </a>
       </li>
+
     </ul>
   </div>
 
@@ -93,9 +94,11 @@
   <div class="main-content" [class.active]="mobileMenuOpen">
     <!-- Mobile Menu Toggle -->
     <div class="mobile-menu-toggle d-md-none">
-       <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
-      <span class="menu-icon"></span>
-    </button>
+     <!-- Mobile Menu Toggle -->
+<button class="mobile-menu-toggle d-md-none" (click)="toggleMobileMenu()">
+  <span class="menu-icon"></span>
+</button>
+
     </div>
 
     <!-- Search Bar -->
@@ -128,82 +131,50 @@
             </ul>
           </li>
 
+
           <!-- Notifications -->
-          <!-- <li class="nav-item topbar-icon dropdown">
+          <li class="nav-item topbar-icon dropdown" *ngIf="authService.isLoggedIn">
             <a class="nav-link dropdown-toggle" (click)="toggleDropdown('notificationDropdown')"
               href="javascript:void(0)">
               <i class="fa fa-bell"></i>
-              <span class="notification">4</span>
+              <span class="notification" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
             </a>
             <ul class="dropdown-menu notif-box" [ngClass]="{'show': activeDropdown === 'notificationDropdown'}">
               <li>
-                <div class="dropdown-title">You have 4 new notifications</div>
+                <div class="dropdown-title">
+                  You have {{ unreadCount }} new notification{{ unreadCount !== 1 ? 's' : '' }}
+                  <button class="btn btn-sm btn-link float-right" (click)="markAllAsRead()" *ngIf="unreadCount > 0"
+                    style="padding: 0; font-size: 12px;">
+                    Mark all as read
+                  </button>
+                </div>
               </li>
               <li>
-                <div class="notif-scroll scrollbar-outer">
+                <div class="notif-scroll scrollbar-outer" style="max-height: 300px; overflow-y: auto;">
                   <div class="notif-center">
-                    <a href="#">
-                      <div class="notif-icon notif-success">
-                        <i class="fa fa-comment"></i>
+                    <div *ngIf="notifications.length === 0" class="text-center p-3 text-muted">
+                      No new notifications
+                    </div>
+                    <a href="javascript:void(0)" *ngFor="let notification of notifications"
+                      (click)="markAsRead(notification)" [class.unread]="!notification.isRead">
+                      <div class="notif-icon notif-primary">
+                        <i class="fa fa-calendar"></i>
                       </div>
                       <div class="notif-content">
-                        <span class="block">Rahmad commented on Admin</span>
-                        <span class="time">12 minutes ago</span>
+                        <span class="block">{{ notification.message }}</span>
+                        <span class="time">{{ getTimeAgo(notification.createdAt) }}</span>
                       </div>
                     </a>
                   </div>
                 </div>
               </li>
-              <li><a class="see-all" href="#">See all notifications<i class="fa fa-angle-right"></i></a></li>
+              <li>
+                <a class="see-all" href="javascript:void(0)">
+                  See all notifications<i class="fa fa-angle-right"></i>
+                </a>
+              </li>
             </ul>
-          </li> -->
-
-
-
-          <!-- Notifications -->
-<li class="nav-item topbar-icon dropdown" *ngIf="authService.isLoggedIn">
-  <a class="nav-link dropdown-toggle" (click)="toggleDropdown('notificationDropdown')"
-    href="javascript:void(0)">
-    <i class="fa fa-bell"></i>
-    <span class="notification" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
-  </a>
-  <ul class="dropdown-menu notif-box" [ngClass]="{'show': activeDropdown === 'notificationDropdown'}">
-    <li>
-      <div class="dropdown-title">
-        You have {{ unreadCount }} new notification{{ unreadCount !== 1 ? 's' : '' }}
-        <button class="btn btn-sm btn-link float-right" (click)="markAllAsRead()" 
-                *ngIf="unreadCount > 0" style="padding: 0; font-size: 12px;">
-          Mark all as read
-        </button>
-      </div>
-    </li>
-    <li>
-      <div class="notif-scroll scrollbar-outer" style="max-height: 300px; overflow-y: auto;">
-        <div class="notif-center">
-          <div *ngIf="notifications.length === 0" class="text-center p-3 text-muted">
-            No new notifications
-          </div>
-          <a href="javascript:void(0)" *ngFor="let notification of notifications" 
-             (click)="markAsRead(notification)"
-             [class.unread]="!notification.isRead">
-            <div class="notif-icon notif-primary">
-              <i class="fa fa-calendar"></i>
-            </div>
-            <div class="notif-content">
-              <span class="block">{{ notification.message }}</span>
-              <span class="time">{{ getTimeAgo(notification.createdAt) }}</span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </li>
-    <li>
-      <a class="see-all" href="javascript:void(0)">
-        See all notifications<i class="fa fa-angle-right"></i>
-      </a>
-    </li>
-  </ul>
-</li>
+          </li>
 
 
           <!-- User Profile -->
@@ -365,12 +336,12 @@
   <div class="container">
     <div class="footer-content">
       <div class="footer-col">
-      <h3 class="footer-title">Coordonnées</h3>
-      <p><strong>Adresse :</strong> Résidence Atlantic, IMM H, App.3 CYM - Rabat</p>
-      <p><i class="fas fa-envelope"></i> info@newtech.ma</p>
-      <p><i class="fas fa-phone"></i> +212 537690030</p>
-      <p><i class="fas fa-fax"></i> +212 537690033</p>
-    </div>
+        <h3 class="footer-title">Coordonnées</h3>
+        <p><strong>Adresse :</strong> Résidence Atlantic, IMM H, App.3 CYM - Rabat</p>
+        <p><i class="fas fa-envelope"></i> info@newtech.ma</p>
+        <p><i class="fas fa-phone"></i> +212 537690030</p>
+        <p><i class="fas fa-fax"></i> +212 537690033</p>
+      </div>
       <div class="footer-col">
         <h3>À propos</h3>
         <ul>
@@ -389,7 +360,7 @@
         </ul>
       </div>
       <div class="footer-col">
-      
+
         <form>
           <div class="form-group">
             <input type="email" class="form-control" placeholder="Your Email">

@@ -1,28 +1,47 @@
-<!-- components/formation-edit/formation-edit.component.html -->
 <div class="container mt-4">
-    <h2>Edit Formation</h2>
-    <form (ngSubmit)="onSubmit()" #formationForm="ngForm">
-      <!-- Form fields same as add component -->
-      
-      <div *ngIf="formation.imageUrl" class="mb-3">
-        <img [src]="formation.imageUrl" alt="Current image" class="img-thumbnail" style="max-height: 200px;">
-        <div class="form-text">Current image</div>
-      </div>
-  
-      <div class="form-group mb-3">
-        <label for="image">Change Image</label>
-        <input type="file" class="form-control" id="image" name="image"
-               (change)="onFileSelected($event)" accept="image/*">
-      </div>
-  
-      <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-secondary" (click)="onCancel()">
-          Cancel
-        </button>
-        <button type="submit" class="btn btn-primary" [disabled]="!formationForm.form.valid || isUploading">
-          Update
-          <span *ngIf="isUploading" class="spinner-border spinner-border-sm ms-1"></span>
-        </button>
-      </div>
-    </form>
-  </div>
+  <h2>✏️ Modifier une formation</h2>
+
+  <form (ngSubmit)="onSubmit()" #formationForm="ngForm">
+
+    <!-- Title -->
+    <div class="form-group mb-3">
+      <label for="title">Titre</label>
+      <input type="text" class="form-control" id="title" name="title" required [(ngModel)]="formation.title" />
+    </div>
+
+    <!-- Description -->
+    <div class="form-group mb-3">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" name="description" required rows="4"
+        [(ngModel)]="formation.description"></textarea>
+    </div>
+
+    <!-- Price -->
+    <div class="form-group mb-3">
+      <label for="price">Prix</label>
+      <input type="number" class="form-control" id="price" name="price" required min="0"
+        [(ngModel)]="formation.price" />
+    </div>
+
+    <!-- Image actuelle -->
+    <div *ngIf="formation.imageUrl" class="mb-3">
+      <img [src]="formation.imageUrl" alt="Image actuelle" class="img-thumbnail" style="max-height: 200px;" />
+      <div class="form-text">Image actuelle</div>
+    </div>
+
+    <!-- Upload nouvelle image -->
+    <div class="form-group mb-3">
+      <label for="image">Changer l'image</label>
+      <input type="file" class="form-control" id="image" name="image" (change)="onFileSelected($event)" accept="image/*">
+    </div>
+
+    <!-- Actions -->
+    <div class="d-flex justify-content-between">
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">Annuler</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!formationForm.form.valid || isUploading">
+        Modifier
+        <span *ngIf="isUploading" class="spinner-border spinner-border-sm ms-2"></span>
+      </button>
+    </div>
+  </form>
+</div>

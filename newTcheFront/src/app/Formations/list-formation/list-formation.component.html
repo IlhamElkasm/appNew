@@ -1,41 +1,46 @@
-<!-- components/formation-list/formation-list.component.html -->
-<div class="container mt-4" id="listformation">
-  <h2>Formations</h2>
-  <!-- <a [routerLink]="['/formation']" class="btn btn-primary btn-sm">addformation</a> -->
+<div class="container">
+  <h2>🎓 Liste des Formations</h2>
 
-  <div *ngIf="isLoading" class="text-center">
-    <div class="spinner-border" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  </div>
+  <table mat-table [dataSource]="formations" class="mat-elevation-z8 custom-table" *ngIf="formations.length > 0">
 
-  <div *ngIf="!isLoading && formations.length === 0" class="alert alert-info">
-    No formations found.
-  </div>
+    <!-- Image Column -->
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef> Image </th>
+      <td mat-cell *matCellDef="let formation">
+        <img [src]="formation.imageUrl || 'assets/default-image.png'" alt="Image Formation" class="formation-img" />
+      </td>
+    </ng-container>
 
-  <div class="row">
-    <div class="col-md-4 mb-4" *ngFor="let formation of formations">
-      <div class="card h-100">
-        <img *ngIf="formation.imageUrl" [src]="formation.imageUrl" class="card-img-top" alt="Formation image">
-        <div class="card-body">
-          <h5 class="card-title">{{ formation.title }}</h5>
-          <p class="card-text">{{ formation.description }}</p>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <strong>Date:</strong> {{ formation.startDate | date:'medium' }} - {{ formation.endDate | date:'medium' }}
-            </li>
-            <li class="list-group-item">
-              <strong>Price:</strong> {{ formation.price | currency }}
-            </li>
-           
-          </ul>
-        </div>
-        <div class="card-footer">
-          <a [routerLink]="['/formations', formation.id]" class="btn btn-primary btn-sm">View Details</a>
-          <a [routerLink]="['/edit-formation/:id', formation.id, 'edit']" class="btn btn-warning btn-sm ms-2">Edit</a>
-          <button (click)="deleteFormation(formation.id!)" class="btn btn-danger btn-sm ms-2">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
+    <!-- Titre Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Titre </th>
+      <td mat-cell *matCellDef="let formation"> {{ formation.title }} </td>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let formation"> {{ formation.description }} </td>
+    </ng-container>
+
+    <!-- Prix Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef> Prix </th>
+      <td mat-cell *matCellDef="let formation"> {{ formation.price | currency:'EUR':'symbol':'1.0-0' }} </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let formation">
+        <button mat-stroked-button color="accent" (click)="editFormation(formation.id)">✏️ Modifier</button>
+        <button mat-stroked-button color="warn" (click)="deleteFormation(formation.id)">🗑 Supprimer</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <p class="no-data" *ngIf="formations.length === 0">Aucune formation trouvée.</p>
 </div>

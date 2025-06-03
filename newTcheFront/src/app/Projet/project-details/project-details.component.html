@@ -1,0 +1,17 @@
+<div class="container mt-5" *ngIf="project">
+  <div class="card shadow-lg rounded-4 overflow-hidden" style="max-width: 700px; margin: auto;">
+    <img 
+      [src]="project.imageUrl" 
+      alt="project image" 
+      class="card-img-top" 
+      style="height: 350px; object-fit: cover; border-bottom-left-radius: 0; border-bottom-right-radius: 0;"
+    >
+    <div class="card-body p-4">
+      <h2 class="card-title mb-3 fw-bold">{{ project.titre }}</h2>
+      <p class="card-text text-secondary fs-5">{{ project.description }}</p>
+      <button class="btn btn-outline-primary mt-4" routerLink="/projects">
+        ← Retour à la liste
+      </button>
+    </div>
+  </div>
+</div>

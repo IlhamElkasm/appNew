@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Formation } from 'src/app/Model/Formation';
 import { FormationService } from 'src/app/Service/formation.service';
 
@@ -9,9 +10,12 @@ import { FormationService } from 'src/app/Service/formation.service';
 })
 export class ListFormationComponent implements OnInit {
   formations: Formation[] = [];
+  displayedColumns: string[] = ['image', 'title', 'description', 'price', 'actions'];
   isLoading = true;
 
-  constructor(private formationService: FormationService) { }
+  constructor(private formationService: FormationService,
+    private router:Router
+  ) { }
 
   ngOnInit(): void {
     this.loadFormations();
@@ -31,16 +35,19 @@ export class ListFormationComponent implements OnInit {
     );
   }
 
+  viewFormation(id: number) {
+    console.log('View formation', id);
+  }
+
+  editFormation(id: number) {
+  this.router.navigate(['/edit-formation', id]);
+  }
+
   deleteFormation(id: number) {
     if (confirm('Are you sure you want to delete this formation?')) {
-      this.formationService.deleteFormation(id).subscribe(
-        () => {
-          this.formations = this.formations.filter(f => f.id !== id);
-        },
-        error => {
-          console.error('Error deleting formation:', error);
-        }
-      );
+      this.formationService.deleteFormation(id).subscribe(() => {
+        this.formations = this.formations.filter(f => f.id !== id);
+      });
     }
   }
 }

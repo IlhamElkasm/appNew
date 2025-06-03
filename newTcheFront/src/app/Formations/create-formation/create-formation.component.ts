@@ -58,10 +58,6 @@ export class CreateFormationComponent {
       this.errorMessage = 'Price cannot be negative';
       return false;
     }
-    if (new Date(this.formation.startDate) > new Date(this.formation.endDate)) {
-      this.errorMessage = 'End date must be after start date';
-      return false;
-    }
     this.errorMessage = null;
     return true;
   }
@@ -84,8 +80,6 @@ export class CreateFormationComponent {
   private createFormation(): void {
     const payload = {
       ...this.formation,
-      startDate: this.formatDate(this.formation.startDate),
-      endDate: this.formatDate(this.formation.endDate)
     };
 
     this.formationService.createFormation(payload as any).subscribe({

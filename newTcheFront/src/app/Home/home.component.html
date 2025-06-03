@@ -26,37 +26,6 @@
 </section>
 
 
-<!-- About Us Section -->
-<!-- <section class="hero-section">
-    <div class="container">
-        <div class="about-us">
-            <div class="about-image">
-                <img src="assets/img/NewTech.png" alt="Project visualization">
-            </div>
-            <div class="about-content">
-                <h2>About Us</h2>
-                <p>Le bureau a reconnu l'impact des crises financières internationales sur l'économie mondiale, 
-                    appelant à l'adoption de solutions novatrices pour y faire face.
-                    Pour maintenir ses acquis et répondre aux attentes de ses clients,
-                    elle a mis en place des principes axés sur la qualité, la créativité, la réduction des coûts et la compétitivité.
-                    Une attention particulière est accordée au développement des compétences humaines, 
-                    à l'utilisation de technologies de pointe et à l'application de systèmes de gestion modernes.</p>
-                
-                <div class="stats">
-                    <div class="stat-box">
-                        <div class="stat-number">{{ formationCount }}</div>
-                        <div class="stat-label">Formations</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-number">{{ newClientCount }}</div>
-                        <div class="stat-label">Clients</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> -->
-
 <!-- Formations Section -->
 <section class="formations-section" id="formations">
     <div class="container">
@@ -80,11 +49,6 @@
                 </div>
                 <div class="card-content">
                     <h3 class="card-title">{{ formation.title }}</h3>
-                    <div class="formation-details">
-                        <p><strong>Date:</strong> {{ formation.startDate | date:'mediumDate' }} - {{ formation.endDate |
-                            date:'mediumDate' }}</p>
-
-                    </div>
                     <button class="btn-reserve" *ngIf="formation.id !== undefined" (click)="viewDetails(formation.id!)">
                         View Details
                         <svg *ngIf="!loading" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -107,21 +71,99 @@
 <!-- Projects Section -->
 <section class="projects-section" id="projects" *ngIf="authService.isClient()">
     <h2 class="section-title">Projets</h2>
-    <div class="card-grid">
-        <div class="card" *ngFor="let projet of projets">
-            <div class="card-img">
-                <img [src]="projet.imageUrl" [alt]="projet.titre">
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">{{ projet.titre }}</h3>
-                <p class="card-text">{{ projet.description }}</p>
-            </div>
+    <div class="container mt-4">
+    <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let project of projets">
+      <div class="card h-100 shadow-sm" (click)="goToDetails(project.id)" style="cursor: pointer;">
+        <img [src]="project.imageUrl" class="card-img-top" alt="project image" style="height: 200px; object-fit: cover;">
+        <div class="card-body">
+          <h5 class="card-title">{{ project.titre }}</h5>
         </div>
+      </div>
     </div>
+  </div>
+</div>
 </section>
 
 
 <app-location></app-location>
+
+<section class="references-section">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-title1">Nos Références</h1>
+            </div>
+
+            <div class="floating-slider">
+                <div class="slider-track">
+                    <div class="floating-logo">
+                        <img  src="assets/img/Nos references/oncf.png" alt="ONCF">
+                    </div>
+                    <div class="floating-logo">
+                        <img src="assets/img/Nos references/onep.png" alt="ONEP">
+                    </div>
+                    <div class="floating-logo">
+                        <img src="assets/img/Nos references/one.png" alt="ONE">
+                    </div>
+                    <div class="floating-logo">
+                        <img src="assets/img/Nos references/emi.png" alt="EMI">
+                    </div>
+                    <div class="floating-logo">
+                        <img src="assets/img/Nos references/cdg.png" alt="CDG">
+                    </div>
+                    <div class="floating-logo">
+                        <img src="assets/img/Nos references/iav.png"  alt="IAV">
+                    </div>
+                    <div class="floating-logo">
+                        <img src="assets/img/Nos references/um5.png"  alt="UM5">
+                    </div>
+                    <div class="floating-logo">
+                        <img src="assets/img/Nos references/Schneider.png" alt="Schneider">
+                    </div>
+                    <!-- Duplication pour l'animation continue -->
+                    <div class="floating-logo">
+                        <img  src="assets/img/Nos references/oncf.png" alt="ONCF">
+                    </div>
+                    <div class="floating-logo">
+                        <img src="assets/img/Nos references/onep.png" alt="ONEP">
+                    </div>
+                    <div class="floating-logo">
+                        <img src="assets/img/Nos references/one.png" alt="ONE">
+                    </div>
+                    <div class="floating-logo">
+                        <img src="assets/img/Nos references/emi.png" alt="EMI">
+                    </div>
+                    <div class="floating-logo">
+                        <img src="assets/img/Nos references/cdg.png" alt="CDG">
+                    </div>
+                    <div class="floating-logo">
+                        <img src="assets/img/Nos references/iav.png"  alt="IAV">
+                    </div>
+                    <div class="floating-logo">
+                        <img src="assets/img/Nos references/um5.png"  alt="UM5">
+                    </div>
+                    <div class="floating-logo">
+                        <img src="assets/img/Nos references/Schneider.png" alt="Schneider">
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Années d'expérience</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Clients satisfaits</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Projets réalisés</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 <!-- Footer -->
 <footer class="footer">

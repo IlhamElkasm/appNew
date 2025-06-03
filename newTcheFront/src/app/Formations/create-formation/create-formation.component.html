@@ -19,25 +19,6 @@
                 
     </div>
 
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="startDate">Start Date*</label>
-          <input type="date" class="form-control" id="startDate" name="startDate"
-                 [(ngModel)]="formation.startDate" required>
-                 
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="endDate">End Date*</label>
-          <input type="date" class="form-control" id="endDate" name="endDate"
-                 [(ngModel)]="formation.endDate" required>
-                 {{ formation.startDate | date: 'yyyy-MM-dd' }} - {{ formation.endDate | date: 'yyyy-MM-dd' }}
-
-        </div>
-      </div>
-    </div>
 
     <div class="row mb-3">
       <div class="col-md-6">
